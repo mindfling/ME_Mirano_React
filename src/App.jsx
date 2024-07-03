@@ -8,15 +8,12 @@ function App() {
 
   return (
     <>
-    
-  <Header />
+      <Header />
 
-<main>
+      <main>
+        <Hero />
 
-<Hero />
-
-
-
+{/*
 <section className="filter">
   <h2 className="visually-hidden"></h2>
   <div className="container">
@@ -76,9 +73,9 @@ function App() {
     </form>
   </div>
 </section>
+*/}
 
 <Goods />
-
 
 <section className="subscribe">
   <div className="container">
@@ -98,7 +95,6 @@ function App() {
   </div>
 </section>
 </main>
-
 
 <Footer />
 
@@ -162,7 +158,6 @@ function App() {
   </div>
 </footer>
  */}
-
 
       <Order />
     </>
