@@ -1,4 +1,5 @@
 /** Ваш заказ - Боковая корзина с заказами */
+import "./cart.scss";
 
 import { goodsArray } from "../../goodsArray";
 import { CartItem } from "./CartItem/CartItem";
