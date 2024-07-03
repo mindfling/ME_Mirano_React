@@ -1,7 +1,8 @@
 import "./footer.scss";
 
+
 export const Footer = () => {
-  const year = 2025;
+  const year = 2024;
 
   return (
     <>
