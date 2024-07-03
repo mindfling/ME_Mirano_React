@@ -1,3 +1,5 @@
+import "./hero.scss";
+
 export const Hero = () => {
 
   const title = "Авторские букеты";
