@@ -1,5 +1,6 @@
-@use "../varibles" as *;
-@use "../media" as *;
+@use "../../scss/varibles" as *;
+@use "../../scss/media" as *;
+
 
 .card {
   background-color: $white;
