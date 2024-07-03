@@ -15,6 +15,7 @@ function App() {
 
         <Goods />
 
+{/* 
 <section className="subscribe">
   <div className="container">
     <h2 className="subscribe__title">Подпишись на&nbsp;рассылку</h2>
@@ -32,7 +33,9 @@ function App() {
     </form>
   </div>
 </section>
-</main>
+*/}
+
+      </main>
 
 <Footer />
 

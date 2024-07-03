@@ -1,3 +1,5 @@
+import "./goods.scss";
+
 import { goodsArray } from "../../goodsArray";
 import { Card } from "../Card/Card";
 import { Cart } from "../Cart/Cart";
@@ -9,7 +11,6 @@ export const Goods = () => {
     <>
       <section className="goods">
         <div className="container goods__container">
-        
           <div className="goods__box">
             <h2 className="goods__title">Цветы</h2>
 
