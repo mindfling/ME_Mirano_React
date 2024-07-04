@@ -2,7 +2,7 @@
 import "./cart.scss";
 
 import { goodsArray } from "../../goodsArray";
-import { CartItem } from "./CartItem/CartItem";
+import { CartItem } from "../CartItem/CartItem";
 
 export const Cart = () => {
 
