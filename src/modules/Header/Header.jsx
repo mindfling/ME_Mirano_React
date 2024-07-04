@@ -1,10 +1,25 @@
 import "./header.scss";
 
 export const Header = () => {
-  const hint = "Букет из алых роз";
-  //todo const hintList = [];
+
+  const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+  const getRandomN = (max) => Math.floor(Math.random() * (max + 1));
   
-return (
+  const getHint = () => {
+    const hintList = [
+      "Букет из роз",
+      "Букет из алых роз",
+      "Букет красивых роз",
+      "Самый красивый букет роз",
+      'Тюльпаны на заказ',
+      'Букет хризантем',
+    ];
+    const len = hintList.length;
+    const hint = hintList[getRandomInt(0, len-1)];
+    return hint;
+  };
+
+  return (
     <>
       <header className="header">
         <div className="container header__container">
@@ -13,7 +28,7 @@ return (
               className="header__input"
               type="search"
               name="search"
-              placeholder={hint}
+              placeholder={getHint()}
             />
 
             <button className="header__search-button" aria-label="начать поиск">
