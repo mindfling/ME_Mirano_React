@@ -6,15 +6,15 @@ import { CartItem } from "../CartItem/CartItem";
 
 export const Cart = () => {
 
-  // ! todo Hack
-  const btnClose = (e) => {
+  // todo Hack
+  const btnClose = () => {
     const cart = document.querySelector(".cart_open");
     cart.classList.remove("cart_open");
   };
 
   return (
     <>
-      <section className="cart cart_open">
+      <section className="cart cart_nopen">
         <div className="cart__container">
           <div className="cart__header">
             <h3 className="cart__title">Ваш заказ</h3>
@@ -58,31 +58,6 @@ export const Cart = () => {
                 </li>
               );
             })}
-
-            {/* 
-          <li className="cart__item">
-            <img
-              className="cart__img"
-              src="https://dull-rose-pawpaw.glitch.me/img/38.jpg"
-              alt="Букет из тюльпан Dolche vita (51 шт)"
-            />
-            <h4 className="cart__item-title">
-              Букет из тюльпан Dolche vita (51 шт)
-            </h4>
-            <div className="cart__counter">
-              <button className="cart__counter-btn">-</button>
-              <input
-                className="cart__counter-input"
-                type="number"
-                max="99"
-                min="0"
-                value="2"
-              />
-              <button className="cart__counter-btn">+</button>
-            </div>
-            <p className="cart__price">13400&nbsp;₽</p>
-          </li>
-            */}
             
           </ul>
 
