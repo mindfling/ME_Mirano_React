@@ -1,25 +1,28 @@
 /** Ваш заказ - Боковая корзина с заказами */
-import "./cart.scss";
-
 import { goodsArray } from "../../goodsArray";
 import { CartItem } from "../CartItem/CartItem";
+import "./cart.scss";
 
 export const Cart = () => {
-
   // todo Hack
-  const btnClose = () => {
+  const btnCloseCart = () => {
     const cart = document.querySelector(".cart_open");
     cart.classList.remove("cart_open");
+    cart.classList.add("cart_close");
   };
 
   return (
     <>
-      <section className="cart cart_nopen">
+      <section className="cart cart_open">
         <div className="cart__container">
           <div className="cart__header">
             <h3 className="cart__title">Ваш заказ</h3>
 
-            <button className="cart__close" onClick={btnClose}>
+            <button
+              className="cart__closeBtn"
+              onClick={btnCloseCart}
+              title="Открыть корзину заказов"
+            >
               <svg
                 width="28"
                 height="28"
@@ -50,7 +53,6 @@ export const Cart = () => {
           <p className="cart__date-delivery">сегодня в 14:00</p>
 
           <ul className="cart__list">
-
             {goodsArray.map((item) => {
               return (
                 <li className="cart__item" key={item.id}>
@@ -58,7 +60,6 @@ export const Cart = () => {
                 </li>
               );
             })}
-            
           </ul>
 
           <div className="cart__footer">

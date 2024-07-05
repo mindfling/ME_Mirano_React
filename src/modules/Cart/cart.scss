@@ -5,7 +5,7 @@
 .cart {
   align-self: start;
   padding-top: 100px;
-  display: none;
+  display: flex;
 
   &_open {
     display: flex;
@@ -59,7 +59,12 @@
     font-size: 28px;
   }
 
-  &__close {
+  &_close {
+    display: none;
+  }
+
+  &__closeBtn {
+    display: block;
   }
 
   &__date-delivery {
@@ -79,6 +84,8 @@
     margin-bottom: 24px;
     flex-grow: 1;
   }
+
+/*
 
   &__item {
     padding: 16px 0;
@@ -148,6 +155,9 @@
   &__price {
     grid-area: price;
   }
+
+*/
+
 
   &__footer {
     display: flex;

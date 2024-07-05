@@ -1,3 +1,5 @@
+import cart from './CartItem.module.scss';
+
 /* data = item
 {
   id: 2,
@@ -10,21 +12,21 @@
 
 export const CartItem = ({ data }) => {
   return (
-    <li className="cart__item">
-      <img className="cart__img" src={data.img} alt={data.title} />
-      <h4 className="cart__item-title">{data.title}</h4>
-      <div className="cart__counter">
-        <button className="cart__counter-btn">-</button>
+    <li className={cart.item}>
+      <img className={cart.img} src={data.img} alt={data.title} />
+      <h4 className={cart.itemTitle}>{data.title}</h4>
+      <div className={cart.counter}>
+        <button className={cart.counterBtn}>-</button>
         <input
-          className="cart__counter-input"
+          className={cart.counterInput}
           type="number"
           max="99"
           min="0"
           value="1"
         />
-        <button className="cart__counter-btn">+</button>
+        <button className={cart.counterBtn}>+</button>
       </div>
-      <p className="cart__price">{data.price}&nbsp;₽</p>
+      <p className={cart.price}>{data.price}&nbsp;₽</p>
     </li>
   );
 };
