@@ -1,9 +1,13 @@
-import "./header.scss";
+import classNames from 'classnames';
+import header from './Header.module.scss';
+// import "./header.scss";
+
 
 export const Header = () => {
 
   const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
-  const getRandomN = (max) => Math.floor(Math.random() * (max + 1));
+
+  const getRandom = (num) => Math.floor(Math.random() * (num + 1));
   
   const getHint = () => {
     const hintList = [
@@ -13,25 +17,33 @@ export const Header = () => {
       "Самый красивый букет роз",
       'Тюльпаны на заказ',
       'Букет хризантем',
+      '1 000 000 алых роз'
     ];
-    const len = hintList.length;
-    const hint = hintList[getRandomInt(0, len-1)];
-    return hint;
+    return hintList[getRandom(hintList.length-1)];
   };
+
+
+  // todo Hack
+  const btnOpenCart = () => {
+    const cart = document.querySelector(".cart_close");
+    cart.classList.remove("cart_close");
+    cart.classList.add("cart_open");
+  };
+
 
   return (
     <>
-      <header className="header">
-        <div className="container header__container">
-          <form className="header__form" action="#">
+      <header className={header.header}>
+        <div className={classNames("container", header.container)}>
+          <form className={header.form} action="#">
             <input
-              className="header__input"
+              className={header.input}
               type="search"
               name="search"
               placeholder={getHint()}
             />
 
-            <button className="header__search-button" aria-label="начать поиск">
+            <button className={header.searchButton} aria-label="начать поиск">
               <svg
                 width="20"
                 height="20"
@@ -48,12 +60,12 @@ export const Header = () => {
           </form>
 
           <img
-            className="header__logo"
+            className={header.logo}
             src="/img/logo.svg"
             alt="Логотип Mirano Flower Boutique"
           />
 
-          <button className="header__cart-button">0</button>
+          <button className={header.cartButton} onClick={btnOpenCart}>{getRandomInt(1, 9)}</button>
         </div>
       </header>
     </>
