@@ -55,9 +55,7 @@ export const Cart = () => {
           <ul className="cart__list">
             {goodsArray.map((item) => {
               return (
-                <li className="cart__item" key={item.id}>
-                  <CartItem data={item} />
-                </li>
+                  <CartItem key={item.id} {...item} />
               );
             })}
           </ul>
