@@ -1,20 +1,10 @@
 import cart from './CartItem.module.scss';
 
-/* data = item
-{
-  id: 2,
-  img: "https://dull-rose-pawpaw.glitch.me/img/39.jpg",
-  title: "Букет из роз Grand Avalanche (101 шт)",
-  dateDelivery: "сегодня в 14:00",
-  price: "14800",
-},
-*/
-
-export const CartItem = ({ data }) => {
+export const CartItem = ({ img, title, price }) => {
   return (
     <li className={cart.item}>
-      <img className={cart.img} src={data.img} alt={data.title} />
-      <h4 className={cart.itemTitle}>{data.title}</h4>
+      <img className={cart.img} src={img} alt={title} />
+      <h4 className={cart.itemTitle}>{title}</h4>
       <div className={cart.counter}>
         <button className={cart.counterBtn}>-</button>
         <input
@@ -26,7 +16,7 @@ export const CartItem = ({ data }) => {
         />
         <button className={cart.counterBtn}>+</button>
       </div>
-      <p className={cart.price}>{data.price}&nbsp;₽</p>
+      <p className={cart.price}>{price}&nbsp;₽</p>
     </li>
   );
 };
