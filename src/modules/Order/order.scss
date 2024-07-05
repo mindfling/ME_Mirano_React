@@ -1,5 +1,5 @@
-@use "../../scss/varibles" as *;
-@use "../../scss/media" as *;
+@use "@scss/varibles" as *;
+@use "@scss/media" as *;
 
 
 .order {
@@ -231,6 +231,4 @@
     right: 10px;
     font-size: 36px;
   }
-
-  display: none;
 }
