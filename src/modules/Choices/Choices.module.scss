@@ -1,0 +1,16 @@
+@use "@scss/variables";
+@use "@scss/media";
+
+
+.choices {
+  &__btn {
+  }
+
+  &__box {
+    display: none;
+
+    &_open {
+      display: block;
+    }
+  }
+}

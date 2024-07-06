@@ -1,5 +1,5 @@
-@use "./variables" as *;
-@use "./media" as *;
+@use "@scss/variables" as *;
+@use "@scss/media" as *;
 
 :root {
   position: relative;
@@ -94,4 +94,11 @@ iframe {
   @include mobile {
     padding: 0 14px;
   }
+}
+
+
+
+::selection {
+  background-color: $orange;
+  color: #fff;
 }
