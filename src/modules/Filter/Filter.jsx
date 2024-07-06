@@ -1,15 +1,18 @@
 import "./filter.scss";
 import "./choices.scss";
 
-
 export const Filter = () => {
   return (
     <>
       <section className="filter">
         <h2 className="visually-hidden"></h2>
         <div className="container">
+
           <form className="filter__form">
+
+            {/* 3шт radio buttons */}
             <fieldset className="filter__group">
+              {/* Цветы */}
               <input
                 className="filter__radio"
                 type="radio"
@@ -25,6 +28,7 @@ export const Filter = () => {
                 Цветы
               </label>
 
+              {/* Игрушки */}
               <input
                 className="filter__radio"
                 type="radio"
@@ -39,6 +43,7 @@ export const Filter = () => {
                 Игрушки
               </label>
 
+              {/* Открытки */}
               <input
                 className="filter__radio"
                 type="radio"
@@ -54,8 +59,12 @@ export const Filter = () => {
               </label>
             </fieldset>
 
+
+            {/* Choices */}
             <fieldset className="filter__group filter__group_choices">
               <div className="filter__choices choices">
+
+                {/* открыть фильтр Цены */}
                 <button className="filter__select choices__btn" type="button">
                   Цена
                 </button>
@@ -78,7 +87,11 @@ export const Filter = () => {
                 </div>
               </div>
 
+
+
               <div className="filter__choices filter__choices_type choices">
+
+                {/* открыть фильтр выбора типа товара из списка */}
                 <button className="filter__select choices__btn" type="button">
                   Тип товара
                 </button>
@@ -90,21 +103,25 @@ export const Filter = () => {
                         Монобукеты
                       </button>
                     </li>
+
                     <li className="filter__type-item">
                       <button className="filter__type-button" type="button">
                         Авторские букеты
                       </button>
                     </li>
+
                     <li className="filter__type-item">
                       <button className="filter__type-button" type="button">
                         Цветы в коробке
                       </button>
                     </li>
+
                     <li className="filter__type-item">
                       <button className="filter__type-button" type="button">
                         Цветы в корзине
                       </button>
                     </li>
+
                     <li className="filter__type-item">
                       <button className="filter__type-button" type="button">
                         Букеты из сухоцветов
@@ -112,9 +129,14 @@ export const Filter = () => {
                     </li>
                   </ul>
                 </div>
+
               </div>
             </fieldset>
+
           </form>
+
+
+
         </div>
       </section>
     </>
