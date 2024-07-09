@@ -1,24 +1,28 @@
 import classNames from "classnames";
 import header from "./Header.module.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleCart } from "../../redux/cartSlice";
-import { goodsArray } from "../../goodsArray";
 import { useState } from "react";
 
-
 export const Header = () => {
+  
+    const dispatch = useDispatch(); // диспетчер передает действие
+    // const items = useSelector((state) => state.cart.items); // список товаров в корзине
+    // const [ count ] = useState(items.length); // количество товаров в корзине
+    const count = useSelector((state) => state.cart.items.length);
+    
 
   const handlerCartToggle = () => {
     // открываем окно cart с помощью Redux
     dispatch(toggleCart());
-
-    // todo scrollIntoView scroll-behavior smooth
-    const cartElem = document.querySelector('.cart');
-    console.log('cartElem: ', cartElem);
-    cartElem.scrollIntoView({behavior: 'smooth'});
+    // scrollIntoView scroll-behavior smooth для этого .cart должен уже существовать
+    const cartElem = document.querySelector(".cart");
+    // плавный скролл
+    cartElem.scrollIntoView({ behavior: "smooth" });
   };
 
-  const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+  const getRandomInt = (min, max) =>
+    Math.floor(Math.random() * (max - min + 1) + min);
 
   const getRandom = (num) => Math.floor(Math.random() * (num + 1));
 
@@ -30,14 +34,11 @@ export const Header = () => {
       "Самый красивый букет роз",
       "Тюльпаны на заказ",
       "Букет хризантем",
-      "1 000 000 алых роз",
+      "1000000 алых роз",
     ];
     return hintList[getRandom(hintList.length - 1)];
   };
 
-  const dispatch = useDispatch(); // диспетчер передает действие
-  const goodsCount = getRandomInt(0, goodsArray.length);
-  const [count, setCount] = useState(goodsCount);
 
   return (
     <>
@@ -74,8 +75,11 @@ export const Header = () => {
             alt="Логотип Mirano Flower Boutique"
           />
 
-          {/* // todo goods cart count */}
-          <button className={header.cartButton} onClick={handlerCartToggle}>
+          <button
+            className={header.cartButton}
+            onClick={handlerCartToggle}
+            title={`У вас в корзине ${count} товаров`}
+          >
             {count}
           </button>
         </div>
