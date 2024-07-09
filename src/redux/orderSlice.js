@@ -3,9 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-  isOpen: false,
+  isOpen: false, // изначально корзина с заказами закрыта
 }
-
 
 const orderSlice = createSlice({
   name: 'order',
@@ -13,15 +12,16 @@ const orderSlice = createSlice({
   reducers: {
     openModal(state) {
       state.isOpen = true;
-      console.log('open Modal state is', state.isOpen);
     },
     closeModal(state) {
       state.isOpen = false;
-      console.log('close Modal state is', state.isOpen);
+    },
+    toggleModal(state) {
+      state.isOpen = !state.isOpen;
     },
   }
 });
 
-export const {openModal, closeModal} = orderSlice.actions
+export const { openModal, closeModal, toggleModal } = orderSlice.actions
 
 export default orderSlice.reducer
