@@ -1,10 +1,22 @@
 import classNames from "classnames";
-import order from "./Order.module.scss";
+import s from "./Order.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "../../redux/orderSlice";
 
 // Order с условием
 export const Order = () => {
-  const isOrdered = 1;
-  const isOpen = true;
+  const dispatch = useDispatch(); // диспетчер отправляет действие в Redux
+  const isOrdered = false;
+  const isOpen = useSelector((state) => state.order.isOpen); // селектор получает состояние из Redux store
+
+  const handlerClose = (e) => {
+    // !ЗАДАТЬ ВОПРОС ПО КЛАССУ
+    if (e.target.matches(`.${s.order}`)) {
+      dispatch(closeModal());
+    }
+
+    console.log("handlerClose in Order");
+  };
 
   if (!isOpen) return null;
 
@@ -13,79 +25,79 @@ export const Order = () => {
 
   return (
     <>
-      <div className={order.order}>
-        <div className={order.wrapper}>
+      <div className={s.order} onClick={handlerClose}>
+        <div className={s.wrapper}>
           {isOrdered ? (
             <>
-              <h2 className={order.title}>Заказ оформлен!</h2>
-              <p className={order.id}>Ваш номер заказа: {orderHashNumber}</p>
+              <h2 className={s.title}>Заказ оформлен!</h2>
+              <p className={s.id}>Ваш номер заказа: {orderHashNumber}</p>
             </>
           ) : (
             <>
-              <h2 className={order.title}>Оформить заказ</h2>
-              <form className={order.form} id="order">
-                <fieldset className={order.fieldset}>
-                  <legend className={order.legend}>Данные заказчика</legend>
-                  <div className={order["input-group"]}>
+              <h2 className={s.title}>Оформить заказ</h2>
+              <form className={s.form} id="s">
+                <fieldset className={s.fieldset}>
+                  <legend className={s.legend}>Данные заказчика</legend>
+                  <div className={s["input-group"]}>
                     <input
-                      className={order.input}
+                      className={s.input}
                       type="text"
                       name="name-buyer"
                       placeholder="Имя"
                     />
                     <input
-                      className={order.input}
+                      className={s.input}
                       type="text"
                       name="phone-buyer"
                       placeholder="Телефон"
                     />
                   </div>
                 </fieldset>
-                <fieldset className={order.fieldset}>
-                  <legend className={order.legend}>Данные получателя</legend>
-                  <div className={order["input-group"]}>
+                <fieldset className={s.fieldset}>
+                  <legend className={s.legend}>Данные получателя</legend>
+                  <div className={s["input-group"]}>
                     <input
-                      className={order.input}
+                      className={s.input}
                       type="text"
                       name="name-recipient"
                       placeholder="Имя"
                     />
                     <input
-                      className={order.input}
+                      className={s.input}
                       type="text"
                       name="phone-recipient"
                       placeholder="Телефон"
                     />
                   </div>
                 </fieldset>
-                <fieldset className={order.fieldset}>
-                  <legend className={order.legend}>Адрес</legend>
-                  <div className={order["input-group"]}>
+                <fieldset className={s.fieldset}>
+                  <legend className={s.legend}>Адрес</legend>
+                  <div className={s["input-group"]}>
                     <input
-                      className={order.input}
+                      className={s.input}
                       type="text"
                       name="street"
                       placeholder="Улица"
                     />
                     <input
-                      className={classNames(order.input, order.input_min)}
+                      className={classNames(s.input, s.input_min)}
                       type="text"
                       name="house"
                       placeholder="Дом"
                     />
                     <input
-                      className={classNames(order.input, order.input_min)}
+                      className={classNames(s.input, s.input_min)}
                       type="text"
                       name="apartment"
                       placeholder="Квартира"
                     />
                   </div>
                 </fieldset>
-                <fieldset className={order.fieldset}>
-                  <div className={order.payment}>
-                    <label className={order.labelRadio}>
+                <fieldset className={s.fieldset}>
+                  <div className={s.payment}>
+                    <label className={s.labelRadio}>
                       <input
-                        className={order.radio}
+                        className={s.radio}
                         type="radio"
                         name="payment-online"
                         value="true"
@@ -93,13 +105,23 @@ export const Order = () => {
                       />
                       Оплата онлайн
                     </label>
+
+                    <label className={s.labelRadio}>
+                      <input
+                        className={s.radio}
+                        type="radio"
+                        name="payment-online"
+                        value="false"
+                      />
+                      Оплата наличными
+                    </label>
                   </div>
-                  <div className={order.delivery}>
-                    <label htmlFor="delivery">Доставка 01.07</label>
+                  <div className={s.delivery}>
+                    <label htmlFor="delivery">Доставка 01.07.2024</label>
                     <input type="hidden" name="delivery-date" value="01.07" />
-                    <div className={order.selectWrapper}>
+                    <div className={s.selectWrapper}>
                       <select
-                        className={order.select}
+                        className={s.select}
                         name="delivery-time"
                         id="delivery"
                       >
@@ -107,21 +129,23 @@ export const Order = () => {
                         <option value="12-15">с 12:00 до 15:00</option>
                         <option value="15-18">с 15:00 до 18:00</option>
                         <option value="18-21">с 18:00 до 21:00</option>
+                        <option value="21-22">с 21:00 до 22:45</option>
                       </select>
                     </div>
                   </div>
                 </fieldset>
               </form>
-              <div className={order.footer}>
-                <p className={order.total}>{orderAmount}&nbsp;₽</p>
-                <button className={order.button} type="submit" form="order">
+              <div className={s.footer}>
+                <p className={s.total}>{orderAmount}&nbsp;₽</p>
+                <button className={s.button} type="submit" form="s">
                   Заказать
                 </button>
               </div>
             </>
           )}
         </div>
-        <button className={order.close} type="button">
+        {/* top right close button */}
+        <button className={s.close} type="button">
           ×
         </button>
       </div>

@@ -9,6 +9,7 @@
   display: flex;
   background-color: rgba($dark, 0.5);
   padding: 20px 9px;
+}
 
   .wrapper {
     max-width: 624px;
@@ -105,6 +106,10 @@
 
   .payment {
     margin-bottom: 12px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 12px;
   }
 
   .label-radio,
@@ -167,7 +172,7 @@
       content: "";
       position: absolute;
       top: 50%;
-      right: 16px;
+      right: 36px;
       transform: translateY(-50%);
       display: block;
       width: 8px;
@@ -186,7 +191,7 @@
   }
 
   .select {
-    width: 190px;
+    width: 220px;
     padding: 8px 40px 8px 16px;
     background: $bg;
     border-radius: 8px;
@@ -204,6 +209,16 @@
     align-items: center;
     justify-content: space-between;
   }
+
+
+  .total {
+    padding: 8px 26px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: $bg;
+    font-weight: 700;
+  }
+
 
   .button {
     border-radius: 32px;
@@ -234,4 +249,3 @@
     right: 10px;
     font-size: 36px;
   }
-}

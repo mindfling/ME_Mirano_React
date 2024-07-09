@@ -10,6 +10,7 @@ export const Cart = () => {
     cart.classList.remove("cart_open");
     cart.classList.add("cart_close");
   };
+  const dispatch = useDispatch(); // диспетчер передает действие обратно в Redux
 
   return (
     <>
