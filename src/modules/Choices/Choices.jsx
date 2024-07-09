@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { useState } from "react";
 import "./choices.scss";
 // import s from "./Choices.module.scss";
 

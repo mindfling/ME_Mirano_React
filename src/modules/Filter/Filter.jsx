@@ -10,23 +10,22 @@ export const Filter = () => {
     "Цветы в корзине",
     "Букеты из сухоцветов",
   ]);
-  const [activeTypeIndex, setActiveType] = useState(Math.floor(Math.random() * prodTypeArray.length));
+  const [activeTypeIndex, setActiveType] = useState(
+    Math.floor(Math.random() * prodTypeArray.length)
+  );
 
-  // todo Choices open
   // "price" | "type" | "none"
-  const listNames = [
-    'price',
-    'type',
-    'none',
-  ]
-  // const [activeChoices, setChoices] = useState("none");
+  const listTypes = ["price", "type", "none"];
+  const choicesType = {
+    price: 0,
+    type: 1,
+    none: null,
+  };
 
+  const [openChoice, setOpenChoice] = useState(choicesType.none);
 
-  const [openChoice, setOpenChoice] = useState(null);
-  
   const handleChoicesToggle = (index) => {
-    console.log('openChoice: ', openChoice);
-    setOpenChoice(openChoice === index ? null : index); // инвертируем открытый Choices
+    setOpenChoice(openChoice === index ? choicesType.none : index); // инвертируем открытый Choices
   };
 
   return (
@@ -89,7 +88,7 @@ export const Filter = () => {
               <Choices
                 buttonLabel="Цены"
                 className="choices filter__choices_price"
-                isOpen={openChoice === 0}
+                isOpen={openChoice === choicesType.price}
                 onToggle={() => handleChoicesToggle(0)} // будет срабатывать внутри Choices по клику на эту кнопку
               >
                 <fieldset className="filter__price">
@@ -112,7 +111,7 @@ export const Filter = () => {
               <Choices
                 buttonLabel="Тип товара"
                 className="choices filter__choices_type"
-                isOpen={openChoice === 1}
+                isOpen={openChoice === choicesType.type}
                 onToggle={() => handleChoicesToggle(1)} // будет срабатывать внутри Choices по клику на эту кнопку
               >
                 <ul className="filter__type-list">
