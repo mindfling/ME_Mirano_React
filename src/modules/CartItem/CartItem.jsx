@@ -2,7 +2,7 @@ import cart from './CartItem.module.scss';
 
 export const CartItem = ({ img, title, price }) => {
   return (
-    <li className={cart.item}>
+    <li className={cart.item} title={title}>
       <img className={cart.img} src={img} alt={title} />
       <h4 className={cart.itemTitle}>{title}</h4>
       <div className={cart.counter}>

@@ -1,18 +1,25 @@
 /* Ваш заказ - Боковая корзина с заказами */
-import { goodsArray } from "../../goodsArray";
-import { CartItem } from "../CartItem/CartItem";
 import { useDispatch, useSelector } from "react-redux";
+import { CartItem } from "../CartItem/CartItem";
+import "./cart.scss";
 import { toggleCart } from "../../redux/cartSlice";
 import { openModal } from "../../redux/orderSlice";
-import "./cart.scss";
+
 
 // todo Cart content scroll on mobile screen to .cart elem
 
 export const Cart = () => {
   // получаем state из cartSlice
-  const isOpen = useSelector((state) => state.cart.isOpen); // селектор получает состояние из Redux
   const dispatch = useDispatch(); // диспетчер передает действие обратно в Redux
-  const totalPrice = 123;
+
+  const isOpen = useSelector((state) => state.cart.isOpen); // селектор получает состояние из Redux
+  const items = useSelector((state) => state.cart.items);
+  const count = useSelector((state) => state.cart.items.length);
+
+  const getTotalPrice = (list) => list.reduce((acc, item, i, arr) => +acc + +item.price, 0);
+
+  const totalPrice = getTotalPrice(items); // вычисляем стоимость всех товаров
+
 
   // обработчик закрытия корзины
   const handlerCartClose = () => {
@@ -22,14 +29,14 @@ export const Cart = () => {
 
   // закрываем корзину и переходим к оформлению заказа Order
   const handlerOrderOpen = () => {
-    dispatch(openModal());
-    // dispatch(toggleCart());
+    dispatch(openModal()); // открыть модальн окно
+    // dispatch(toggleCart()); // закрыть корзину
   };
 
   // если окно isOpen false то просто выходим
   // if (!isOpen) return null;
 
-  // todo for querySelector this .cart success
+
   return (
     <>
       <section className={`cart cart_${isOpen ? "open" : "close"}`}>
@@ -37,7 +44,7 @@ export const Cart = () => {
           <>
             <div className="cart__container">
               <div className="cart__header">
-                <h3 className="cart__title">Ваш заказ</h3>
+                <h3 className="cart__title">Ваш заказ <b>{count}&nbsp;шт</b></h3>
 
                 <button
                   className="cart__closeBtn"
@@ -74,7 +81,7 @@ export const Cart = () => {
               <p className="cart__date-delivery">сегодня в 14:00</p>
 
               <ul className="cart__list">
-                {goodsArray.map((item) => {
+                {items.map((item) => {
                   return <CartItem key={item.id} {...item} />;
                 })}
               </ul>

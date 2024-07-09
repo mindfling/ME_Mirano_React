@@ -6,16 +6,14 @@ import { useState } from "react";
 
 
 export const Order = () => {
-
-  // селектор получает состояние из Redux store
-  // const isOpen = useSelector((state) => state.order.isOpen);
-  const { isOpen } = useSelector((state) => state.order);
-  
   // диспетчер отправляет действие в Redux
   const dispatch = useDispatch();
   
   // useState внутренне состояние компонента isOrder -> isOrdered
   const [ isOrdered, setIsOrdered ] = useState(false);
+  
+  // селектор получает состояние из Redux store
+  const { isOpen } = useSelector((state) => state.order);
   
   if (!isOpen) return null;
 
