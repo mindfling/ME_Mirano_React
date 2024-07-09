@@ -3,19 +3,31 @@ import { Choices } from "../Choices/Choices";
 import "./filter.scss";
 
 export const Filter = () => {
-
-  const [typeArray] = useState([
-    'Монобукеты',
-    'Авторские букеты',
-    'Цветы в коробке',
-    'Цветы в корзине',
-    'Букеты из сухоцветов',
+  const [prodTypeArray] = useState([
+    "Монобукеты",
+    "Авторские букеты",
+    "Цветы в коробке",
+    "Цветы в корзине",
+    "Букеты из сухоцветов",
   ]);
+  const [activeTypeIndex, setActiveType] = useState(Math.floor(Math.random() * prodTypeArray.length));
+
+  // todo Choices open
+  // "price" | "type" | "none"
+  const listNames = [
+    'price',
+    'type',
+    'none',
+  ]
+  // const [activeChoices, setChoices] = useState("none");
+
+
+  const [openChoice, setOpenChoice] = useState(null);
   
-  const [
-    activeIndex,
-    setActiveIndex
-  ] = useState(Math.floor(Math.random() * (typeArray.length)));
+  const handleChoicesToggle = (index) => {
+    console.log('openChoice: ', openChoice);
+    setOpenChoice(openChoice === index ? null : index); // инвертируем открытый Choices
+  };
 
   return (
     <>
@@ -73,8 +85,13 @@ export const Filter = () => {
             </fieldset>
 
             <fieldset className="filter__group filter__group_choices">
-              {/* открыть фильтр Цены */}
-              <Choices buttonLabel="Цены" className="choices">
+              {/* Цена `price` "0" */}
+              <Choices
+                buttonLabel="Цены"
+                className="choices filter__choices_price"
+                isOpen={openChoice === 0}
+                onToggle={() => handleChoicesToggle(0)} // будет срабатывать внутри Choices по клику на эту кнопку
+              >
                 <fieldset className="filter__price">
                   <input
                     className="filter__input-price"
@@ -91,15 +108,24 @@ export const Filter = () => {
                 </fieldset>
               </Choices>
 
-              {/* открыть фильтр выбора типа товара из списка */}
+              {/* тип товара `type` "1" */}
               <Choices
                 buttonLabel="Тип товара"
                 className="choices filter__choices_type"
+                isOpen={openChoice === 1}
+                onToggle={() => handleChoicesToggle(1)} // будет срабатывать внутри Choices по клику на эту кнопку
               >
                 <ul className="filter__type-list">
-                  {typeArray.map((item, index) =>(
+                  {prodTypeArray.map((item, index) => (
                     <li className="filter__type-item" key={index}>
-                      <button className={`filter__type-button ${(index === activeIndex) ? "filter__type-button_active" : ""}`} type="button">
+                      <button
+                        className={`filter__type-button ${
+                          index === activeTypeIndex
+                            ? "filter__type-button_active"
+                            : ""
+                        }`}
+                        type="button"
+                      >
                         {item}
                       </button>
                     </li>
