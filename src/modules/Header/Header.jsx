@@ -1,35 +1,38 @@
-import classNames from 'classnames';
-import header from './Header.module.scss';
-// import "./header.scss";
+import classNames from "classnames";
+import header from "./Header.module.scss";
+import { useDispatch } from "react-redux";
+import { toggleCart } from "../../redux/cartSlice";
+import { goodsArray } from "../../goodsArray";
+import { useState } from "react";
 
 
 export const Header = () => {
 
+  const handlerCartToggle = () => {
+    // открываем окно cart с помощью Redux
+    dispatch(toggleCart());
+  };
+
   const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
   const getRandom = (num) => Math.floor(Math.random() * (num + 1));
-  
+
   const getHint = () => {
     const hintList = [
       "Букет из роз",
       "Букет из алых роз",
       "Букет красивых роз",
       "Самый красивый букет роз",
-      'Тюльпаны на заказ',
-      'Букет хризантем',
-      '1 000 000 алых роз'
+      "Тюльпаны на заказ",
+      "Букет хризантем",
+      "1 000 000 алых роз",
     ];
-    return hintList[getRandom(hintList.length-1)];
+    return hintList[getRandom(hintList.length - 1)];
   };
 
-
-  // todo Hack
-  const btnOpenCart = () => {
-    const cart = document.querySelector(".cart_close");
-    cart.classList.remove("cart_close");
-    cart.classList.add("cart_open");
-  };
-
+  const dispatch = useDispatch(); // диспетчер передает действие
+  const goodsCount = getRandomInt(0, goodsArray.length);
+  const [count, setCount] = useState(goodsCount);
 
   return (
     <>
@@ -62,10 +65,14 @@ export const Header = () => {
           <img
             className={header.logo}
             src="/img/logo.svg"
+            title="Mirano Flower Boutique"
             alt="Логотип Mirano Flower Boutique"
           />
 
-          <button className={header.cartButton} onClick={btnOpenCart}>{getRandomInt(1, 9)}</button>
+          {/* // todo goods cart count */}
+          <button className={header.cartButton} onClick={handlerCartToggle}>
+            {count}
+          </button>
         </div>
       </header>
     </>
