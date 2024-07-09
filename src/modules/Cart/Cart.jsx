@@ -2,15 +2,26 @@
 import { goodsArray } from "../../goodsArray";
 import { CartItem } from "../CartItem/CartItem";
 import "./cart.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleCart } from "../../redux/cartSlice";
+import { openModal } from "../../redux/orderSlice";
 
 export const Cart = () => {
-  // todo Hack
-  const btnCloseCart = () => {
-    const cart = document.querySelector(".cart_open");
-    cart.classList.remove("cart_open");
-    cart.classList.add("cart_close");
-  };
+  // получаем state из cartSlice
+  const isOpen = useSelector((state) => state.cart.isOpen); // селектор получает состояние из Redux
   const dispatch = useDispatch(); // диспетчер передает действие обратно в Redux
+
+  const handlerCartClose = () => {
+    dispatch(toggleCart());
+  }
+  
+  const handlerOrderOpen = () => {
+    dispatch(openModal());
+    dispatch(toggleCart());
+  }
+
+  // если окно isOpen false то просто выходим
+  if (!isOpen) return null;
 
   return (
     <>
@@ -21,7 +32,7 @@ export const Cart = () => {
 
             <button
               className="cart__closeBtn"
-              onClick={btnCloseCart}
+              onClick={handlerCartClose}
               title="Открыть корзину заказов"
             >
               <svg
@@ -62,7 +73,12 @@ export const Cart = () => {
           </ul>
 
           <div className="cart__footer">
-            <button className="cart__order-btn">Оформить</button>
+            <button
+              className="cart__order-btn"
+              onClick={handlerOrderOpen}
+            >
+                Оформить
+            </button>
             <p className="cart__price cart__price_total">0&nbsp;₽</p>
           </div>
         </div>
