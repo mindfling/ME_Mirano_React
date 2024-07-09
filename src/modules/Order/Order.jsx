@@ -2,31 +2,47 @@ import classNames from "classnames";
 import s from "./Order.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../redux/orderSlice";
+import { useState } from "react";
 
-// Order с условием
+
 export const Order = () => {
-  const dispatch = useDispatch(); // диспетчер отправляет действие в Redux
-  const isOrdered = false;
-  const isOpen = useSelector((state) => state.order.isOpen); // селектор получает состояние из Redux store
 
-  const handlerClose = (e) => {
-    // !ЗАДАТЬ ВОПРОС ПО КЛАССУ
-    if (e.target.matches(`.${s.order}`)) {
-      dispatch(closeModal());
-    }
-
-    console.log("handlerClose in Order");
-  };
-
+  // селектор получает состояние из Redux store
+  // const isOpen = useSelector((state) => state.order.isOpen);
+  const { isOpen } = useSelector((state) => state.order);
+  
+  // диспетчер отправляет действие в Redux
+  const dispatch = useDispatch();
+  
+  // useState внутренне состояние компонента isOrder -> isOrdered
+  const [ isOrdered, setIsOrdered ] = useState(false);
+  
   if (!isOpen) return null;
 
-  const orderAmount = 2100;
+
+  const handlerClose = (e) => {
+    // todo ЗАДАТЬ ВОПРОС ПО КЛАССУ s.order ".order"
+    if (e.target.matches(`.${s.order}`) || 
+          e.target.closest(`.${s.close}`)) {
+      dispatch(closeModal());
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Order submit form');
+    setIsOrdered(() => true);
+  }
+
+
+  const orderTotalPrice = 2100;
   const orderHashNumber = "971f365a-caa1-4cdb-9446-bad2eff047e1";
 
   return (
     <>
       <div className={s.order} onClick={handlerClose}>
         <div className={s.wrapper}>
+
           {isOrdered ? (
             <>
               <h2 className={s.title}>Заказ оформлен!</h2>
@@ -35,7 +51,7 @@ export const Order = () => {
           ) : (
             <>
               <h2 className={s.title}>Оформить заказ</h2>
-              <form className={s.form} id="s">
+              <form className={s.form} id="s" onSubmit={handleSubmit}>
                 <fieldset className={s.fieldset}>
                   <legend className={s.legend}>Данные заказчика</legend>
                   <div className={s["input-group"]}>
@@ -136,7 +152,7 @@ export const Order = () => {
                 </fieldset>
               </form>
               <div className={s.footer}>
-                <p className={s.total}>{orderAmount}&nbsp;₽</p>
+                <p className={s.total}>{orderTotalPrice}&nbsp;₽</p>
                 <button className={s.button} type="submit" form="s">
                   Заказать
                 </button>
@@ -145,6 +161,7 @@ export const Order = () => {
           )}
         </div>
         {/* top right close button */}
+
         <button className={s.close} type="button">
           ×
         </button>

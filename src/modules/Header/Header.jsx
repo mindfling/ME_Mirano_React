@@ -11,6 +11,11 @@ export const Header = () => {
   const handlerCartToggle = () => {
     // открываем окно cart с помощью Redux
     dispatch(toggleCart());
+
+    // todo scrollIntoView scroll-behavior smooth
+    const cartElem = document.querySelector('.cart');
+    console.log('cartElem: ', cartElem);
+    cartElem.scrollIntoView({behavior: 'smooth'});
   };
 
   const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
