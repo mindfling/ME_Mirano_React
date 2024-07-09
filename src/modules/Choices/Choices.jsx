@@ -1,19 +1,29 @@
 import classNames from "classnames";
-import s from "./Choices.module.scss";
+import { useState } from "react";
+import "./choices.scss";
+// import s from "./Choices.module.scss";
 
 
 // Choices in Filter
 export const Choices = ({ children, buttonLabel, className }) => {
-  
-  
+  const [isOpen, setOpen] = useState(false); // можно в Redux не хранить
+
+  const handleToggle = () => {
+    setOpen((isOpen) => !isOpen);
+  };
+
   return (
     <>
-      <div className={classNames("choices", className)}>
-        <button className="choices__btn" type="button">
+      <div className={classNames(className)}>
+        <button
+          className={`choices__btn choices__btn_${isOpen ? "open" : "close"}`}
+          type="button"
+          onClick={handleToggle}
+        >
           {buttonLabel}
         </button>
 
-        <div className="choices__box">{children}</div>
+        {isOpen && <div className="choices__box">{children}</div>}
       </div>
     </>
   );

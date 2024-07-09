@@ -17,7 +17,10 @@
     border: 0;
     padding: 0;
     margin: 0;
-    gap: 12px;
+    
+    &_radio {
+      gap: 12px;
+    }
 
     &_choices {
       gap: 64px;
@@ -33,6 +36,16 @@
     position: absolute;
   }
 
+  &__radio:focus-visible + &__label {
+    outline: 2px solid $orange;
+    outline-offset: 5px;
+  }
+
+  &__radio:checked + &__label {
+    background-color: $light-orange;
+  }
+
+  
   &__label {
     padding: 16px;
     padding-left: 60px;
@@ -71,30 +84,14 @@
     }
   }
 
-  &__radio:focus-visible + &__label {
-    outline: 2px solid $orange;
-    outline-offset: 5px;
-  }
 
-  &__radio:checked + &__label {
-    background-color: $light-orange;
-  }
 
   &__choices {
-    position: relative;
+    // .choices__btn 
   }
 
   &__select {
-    display: flex;
-    align-items: center;
-    gap: 8px;
 
-    &:after {
-      content: "";
-      width: 8px;
-      height: 8px;
-      background: url("/img/arrow.svg") no-repeat center/contain;
-    }
   }
 
   &__price {
@@ -106,17 +103,7 @@
   }
 
   &__choices-box {
-    position: absolute;
-    top: calc(100% + 20px);
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: $white;
-    padding: 24px;
-    border-radius: 12px;
 
-    &_type {
-      padding: 16px;
-    }
   }
 
   &__input-price {
@@ -127,8 +114,13 @@
     background-color: $bg;
     border: none;
 
+    
     @include mobile {
       width: 80px;
+    }
+    
+    &:focus-visible {
+      outline: 2px solid $orange;
     }
   }
 
@@ -149,6 +141,11 @@
     &:hover {
       color: $light-orange;
     }
+
+    &:focus-visible {
+      outline: 2px solid $orange;
+    }
+
 
     &_active {
       color: $orange;

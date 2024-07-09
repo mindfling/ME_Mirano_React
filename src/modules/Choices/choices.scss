@@ -1,0 +1,52 @@
+@use "@scss/variables" as *;
+@use "@scss/media" as *;
+
+
+.choices {
+  position: relative;
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+    border-radius: 20px;
+
+    &:after {
+      content: "";
+      width: 12px;
+      height: 12px;
+      background: url("/img/arrow.svg") no-repeat center/contain;
+      transition: transform 300ms ease;
+    }
+
+    &_close::after {
+      transform: scale(1);
+    }
+
+    &_open::after {
+      transform: scale(-1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $orange;
+      outline-offset: 5px;
+    }
+  }
+
+
+  &__box {
+    display: block;
+    position: absolute;
+    top: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $white;
+    padding: 24px;
+    border-radius: 12px;
+    z-index: 99;
+
+    &_type {}
+  }
+}
