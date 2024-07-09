@@ -1,9 +1,22 @@
+import { useState } from "react";
 import { Choices } from "../Choices/Choices";
 import "./filter.scss";
-// import "./choices.scss";
-// import s from "./Filter.module.scss";
 
 export const Filter = () => {
+
+  const [typeArray] = useState([
+    'Монобукеты',
+    'Авторские букеты',
+    'Цветы в коробке',
+    'Цветы в корзине',
+    'Букеты из сухоцветов',
+  ]);
+  
+  const [
+    activeIndex,
+    setActiveIndex
+  ] = useState(Math.floor(Math.random() * (typeArray.length)));
+
   return (
     <>
       <section className="filter">
@@ -78,38 +91,19 @@ export const Filter = () => {
                 </fieldset>
               </Choices>
 
-
               {/* открыть фильтр выбора типа товара из списка */}
               <Choices
                 buttonLabel="Тип товара"
                 className="choices filter__choices_type"
               >
                 <ul className="filter__type-list">
-                  <li className="filter__type-item">
-                    <button className="filter__type-button" type="button">
-                      Монобукеты
-                    </button>
-                  </li>
-                  <li className="filter__type-item">
-                    <button className="filter__type-button" type="button">
-                      Авторские букеты
-                    </button>
-                  </li>
-                  <li className="filter__type-item">
-                    <button className="filter__type-button" type="button">
-                      Цветы в коробке
-                    </button>
-                  </li>
-                  <li className="filter__type-item">
-                    <button className="filter__type-button filter__type-button_active" type="button">
-                      Цветы в корзине
-                    </button>
-                  </li>
-                  <li className="filter__type-item">
-                    <button className="filter__type-button" type="button">
-                      Букеты из сухоцветов
-                    </button>
-                  </li>
+                  {typeArray.map((item, index) =>(
+                    <li className="filter__type-item" key={index}>
+                      <button className={`filter__type-button ${(index === activeIndex) ? "filter__type-button_active" : ""}`} type="button">
+                        {item}
+                      </button>
+                    </li>
+                  ))}
                 </ul>
               </Choices>
             </fieldset>
