@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Choices } from "../Choices/Choices";
 import "./filter.scss";
+import { FilterRadio } from "../FilterRadio/FilterRadio";
 
 export const Filter = () => {
   const [prodTypeArray] = useState([
@@ -34,40 +35,18 @@ export const Filter = () => {
         <h2 className="visually-hidden"></h2>
         <div className="container">
           <form className="filter__form">
+
             {/* 3шт radio buttons */}
             <fieldset className="filter__group filter__group_radio">
+
+              <FilterRadio />
+
               {/* Цветы */}
-              <input
-                className="filter__radio"
-                type="radio"
-                name="type"
-                value="bouquets"
-                id="flower"
-                defaultChecked
-              />
-              <label
-                className="filter__label filter__label_flower"
-                htmlFor="flower"
-              >
-                Цветы
-              </label>
 
               {/* Игрушки */}
-              <input
-                className="filter__radio"
-                type="radio"
-                name="type"
-                value="toys"
-                id="toys"
-              />
-              <label
-                className="filter__label filter__label_toys"
-                htmlFor="toys"
-              >
-                Игрушки
-              </label>
 
               {/* Открытки */}
+              {/* 
               <input
                 className="filter__radio"
                 type="radio"
@@ -81,7 +60,9 @@ export const Filter = () => {
               >
                 Открытки
               </label>
+              */}
             </fieldset>
+
 
             <fieldset className="filter__group filter__group_choices">
               {/* Цена `price` "0" */}
@@ -106,6 +87,7 @@ export const Filter = () => {
                   />
                 </fieldset>
               </Choices>
+
 
               {/* тип товара `type` "1" */}
               <Choices

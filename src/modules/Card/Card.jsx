@@ -22,7 +22,7 @@ export const Card = ({ className, id, photoUrl: img, name: title, price }) => {
     >
       <img
         className="card__image"
-        src={`${API_LOCAL}/${img}`}
+        src={`${API_LOCAL}${img}`}
         alt={`Товар ${title}, артикул ${id}`}
       />
       <div className="card__content">
