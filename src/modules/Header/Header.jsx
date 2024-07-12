@@ -1,23 +1,17 @@
-import classNames from "classnames";
-import header from "./Header.module.scss";
 import { useDispatch, useSelector } from "react-redux";
+import header from "./Header.module.scss";
+import classNames from "classnames";
 import { toggleCart } from "../../redux/cartSlice";
-import { useState } from "react";
+
 
 export const Header = () => {
-  
-    const dispatch = useDispatch(); // диспетчер передает действие
-    // const items = useSelector((state) => state.cart.items); // список товаров в корзине
-    // const [ count ] = useState(items.length); // количество товаров в корзине
-    const count = useSelector((state) => state.cart.items.length);
-    
+  const dispatch = useDispatch(); // диспетчер передает действие
+  const cartItemsLength = useSelector((state) => state.cart.items.length);
 
   const handlerCartToggle = () => {
-    // открываем окно cart с помощью Redux
     dispatch(toggleCart());
     // scrollIntoView scroll-behavior smooth для этого .cart должен уже существовать
     const cartElem = document.querySelector(".cart");
-    // плавный скролл
     cartElem.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -38,7 +32,6 @@ export const Header = () => {
     ];
     return hintList[getRandom(hintList.length - 1)];
   };
-
 
   return (
     <>
@@ -78,9 +71,9 @@ export const Header = () => {
           <button
             className={header.cartButton}
             onClick={handlerCartToggle}
-            title={`У вас в корзине ${count} товаров`}
+            title={`У вас в корзине ${cartItemsLength} товаров`}
           >
-            {count}
+            {cartItemsLength}
           </button>
         </div>
       </header>

@@ -1,11 +1,9 @@
 // открыть закрыть Cart корзину заказа через Redux
 import { createSlice } from "@reduxjs/toolkit";
-// import { goodsArray } from "../goodsArray";
 
 const KEY = "cartItems";
 
 const initialState = {
-  // modal is closed by default
   isOpen: false,
   // загружаем из localStorage
   items: JSON.parse(localStorage.getItem(KEY) || "[]"),
@@ -18,9 +16,6 @@ const cartSlice = createSlice({
   reducers: {
     toggleCart(state) {
       state.isOpen = !state.isOpen;
-
-      // ttodo DEBUG
-      // localStorage.setItem(KEY, JSON.stringify(goodsArray))
     },
     addItemToCart(state, action) {
       const {
