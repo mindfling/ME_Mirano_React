@@ -6,15 +6,13 @@ import { API_LOCAL } from "../../const";
 import { useState } from "react";
 
 // деструктуризируем обьект ...item
-export const Card = ({ className, id, photoUrl: img, name: title, price }) => {
+export const Card = ({ className, id, photoUrl: img, name: title, price, dateDelivery, note }) => {
   const dispatch = useDispatch();
 
   const [buttonText, setButtonText] = useState(`${price}\u00a0\u00a3\u00a0`);
   // setButtonText(`${price}\u00a0\u00a3\u00a0`);
   // setButtonText(() => "{price}&nbsp;₽");
 
-  const dateDelivery = "сегодня до 14:00";
-  const note = "Mirano Flowers Shop";
 
   const handlerAddToCart = () => {
     dispatch(addItemToCart({ id, img, title, price, dateDelivery, note }));

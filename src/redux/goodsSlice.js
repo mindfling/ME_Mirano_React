@@ -6,7 +6,7 @@ const URL = `${API_LOCAL}/api/products`;
 
 export const fetchGoods = createAsyncThunk("goods/fetchGoods",
   async () => {
-    return await fetch(`${URL}`)
+    return await fetch(URL)
       .then((response => response.json()))
       .catch((error) => error.message);
 });
@@ -26,17 +26,14 @@ const goodsSlice = createSlice({
     builder
       .addCase(fetchGoods.pending, (state) => {
         state.status = "loading";
-        // console.log('loading');
       })
       .addCase(fetchGoods.fulfilled, (state, action) => {
         state.status = "success"; // success
         state.items = action.payload;
-        // console.log('success');
       })
       .addCase(fetchGoods.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-        // console.log(state.status, 'failed errer message', action, action.error, action.error.message);
       });
   },
 });
