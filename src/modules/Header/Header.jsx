@@ -5,7 +5,7 @@ import { toggleCart } from "../../redux/cartSlice";
 
 
 export const Header = () => {
-  const dispatch = useDispatch(); // диспетчер передает действие
+  const dispatch = useDispatch();
   // const cartItems = useSelector(state => state.cart.cart.items);
   // const itemLength = cartItems.length;
   const cartItemsLength = useSelector((state) => state.cart.items.length);
@@ -21,9 +21,6 @@ export const Header = () => {
     // scrollIntoView scroll-behavior smooth для этого .cart должен уже существовать
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const getRandomInt = (min, max) =>
-    Math.floor(Math.random() * (max - min + 1) + min);
 
   const getRandom = (num) => Math.floor(Math.random() * (num + 1));
 
