@@ -5,25 +5,17 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGoods } from "../../redux/goodsSlice";
 
-
 export const Goods = () => {
-
   const dispatch = useDispatch();
-  // const { items: goods } = useSelector(state => state.goods);
-  const goods = useSelector(state => state.goods.items);
-  console.log('goods: ', goods);
-  const goodsStatus = useSelector(state => state.goods.status);
-  console.log('goodsStatus: ', goodsStatus);
+  const { items: goods, status: goodsStatus, error } = useSelector(state => state.goods);
 
-  const [label] = useState('Цветы');
-
+  const [label] = useState("Цветы");
 
   useEffect(() => {
-    if (goodsStatus === 'idle') {
+    if (goodsStatus === "idle") {
       dispatch(fetchGoods()); // загружаем товары
     }
-
-  })
+  }, [dispatch, goodsStatus]);
 
   return (
     <>
@@ -32,13 +24,21 @@ export const Goods = () => {
           <div className="goods__box">
             <h2 className="goods__title">{label}</h2>
 
-            <ul className="goods__list">
-              {goods.map((item) => (
-                <li className="goods__item" key={"0x00" + item.id}>
-                  <Card className={"goods__card"} {...item} />
-                </li>
-              ))}
-            </ul>
+            {goods.length ? (
+              <>
+                <ul className="goods__list">
+                  {goods.map((item) => (
+                    <li className="goods__item" key={"0x00" + item.id}>
+                      <Card className={"goods__card"} {...item} />
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <>
+                <h3 className="goods__list">Загружаем товары . . . </h3>
+              </>
+            )}
           </div>
 
           <Cart />

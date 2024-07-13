@@ -6,9 +6,9 @@ const URL = `${API_LOCAL}/api/products`;
 
 export const fetchGoods = createAsyncThunk("goods/fetchGoods",
   async () => {
-    const response = await fetch(`${URL}`);
-
-    return await response.json();
+    return await fetch(`${URL}`)
+      .then((response => response.json()))
+      .catch((error) => error.message);
 });
 
 
