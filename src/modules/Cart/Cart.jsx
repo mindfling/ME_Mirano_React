@@ -16,11 +16,8 @@ export const Cart = () => {
   const items = useSelector((state) => state.cart.items);
   const count = useSelector((state) => state.cart.items.length);
 
-  const getTotalPrice = (list) => list.reduce((acc, item, i, arr) => +acc + +item.price, 0);
-
-  const totalPrice = getTotalPrice(items); // вычисляем стоимость всех товаров
-
-
+  
+  
   // обработчик закрытия корзины
   const handlerCartClose = () => {
     // dispatch принимает actionCreator() toggleCart
@@ -36,6 +33,17 @@ export const Cart = () => {
   // если окно isOpen false то просто выходим
   // if (!isOpen) return null;
 
+  // const getTotalPrice = (list) => list.reduce((acc, item, i, arr) => +acc + +item.price, 0);
+
+  // todo to util.js
+  const getTotalPrice = (items) => {
+    const total = items.reduce((acc, item) => (acc + item.count * item.price), 0);
+    const formatter = new Intl.NumberFormat('ru', {
+      style: 'currency',
+      currency: 'RUB',
+    });
+    return formatter.format(total);
+  }
 
   return (
     <>
@@ -87,12 +95,15 @@ export const Cart = () => {
               </ul>
 
               <div className="cart__footer">
-                <button className="cart__order-btn" onClick={handlerOrderOpen}>
+                <button className="cart__order-btn" onClick={handlerOrderOpen} disabled={!items.length} >
                   Оформить
                 </button>
 
                 <p className="cart__price cart__price_total">
-                  {totalPrice}&nbsp;₽
+                  {/* {totalPrice}&nbsp;₽ */}
+                  {/* {items.reduce((acc, item) => acc + item.price * item.count, 0)} */}
+                  {getTotalPrice(items)}
+                  {/* &nbsp;₽ */}
                 </p>
               </div>
             </div>
