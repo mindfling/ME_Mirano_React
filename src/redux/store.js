@@ -5,7 +5,6 @@ import goodsReducer from "./goodsSlice";
 
 const store = configureStore({
   reducer: {
-    // modal: modalReducer
     cart: cartReducer,
     order: orderReducer,
     goods: goodsReducer,
