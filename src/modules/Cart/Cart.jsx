@@ -4,6 +4,7 @@ import { CartItem } from "../CartItem/CartItem";
 import "./cart.scss";
 import { toggleCart } from "../../redux/cartSlice";
 import { openModal } from "../../redux/orderSlice";
+import { useEffect, useRef } from "react";
 
 
 // todo Cart content scroll on mobile screen to .cart elem
@@ -16,7 +17,9 @@ export const Cart = () => {
   const items = useSelector((state) => state.cart.items);
   const count = useSelector((state) => state.cart.items.length);
 
-  
+
+  const cartRef = useRef(null);
+
   
   // обработчик закрытия корзины
   const handlerCartClose = () => {
@@ -30,8 +33,19 @@ export const Cart = () => {
     // dispatch(toggleCart()); // закрыть корзину
   };
 
+  // открываем закрываем Корзину при изменении isOpen
+  useEffect(() => {
+    if (isOpen) {
+      console.log('scrolll cart ref');
+      cartRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [isOpen, count]);
+  
+
+
   // если окно isOpen false то просто выходим
-  // if (!isOpen) return null;
+  if (!isOpen) return null;
+
 
   // const getTotalPrice = (list) => list.reduce((acc, item, i, arr) => +acc + +item.price, 0);
 
@@ -47,7 +61,7 @@ export const Cart = () => {
 
   return (
     <>
-      <section className={`cart cart_${isOpen ? "open" : "close"}`}>
+      <section className={`cart cart_${isOpen ? "open" : "close"}`} ref={cartRef}>
         {isOpen && (
           <>
             <div className="cart__container">

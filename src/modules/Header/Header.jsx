@@ -5,20 +5,14 @@ import { toggleCart } from "../../redux/cartSlice";
 
 
 export const Header = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // диспетчер передает действие
   // const cartItems = useSelector(state => state.cart.cart.items);
   // const itemLength = cartItems.length;
   const cartItemsLength = useSelector((state) => state.cart.items.length);
 
-  const smoothScrollTo = (selector) => {
-    const elem = document.querySelector(selector);
-    elem?.scrollIntoView({ "behavior": "smooth" });
-  }
 
   const handlerCartToggle = () => {
-    dispatch(toggleCart());
-    smoothScrollTo(".cart");
-    // scrollIntoView scroll-behavior smooth для этого .cart должен уже существовать
+    dispatch(toggleCart()); // закрываем Корзину
   };
 
 
