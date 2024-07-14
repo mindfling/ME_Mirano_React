@@ -5,9 +5,8 @@ import "./cart.scss";
 import { toggleCart } from "../../redux/cartSlice";
 import { openModal } from "../../redux/orderSlice";
 import { useEffect, useRef } from "react";
+import { formatNumber } from "../../util";
 
-
-// todo Cart content scroll on mobile screen to .cart elem
 
 export const Cart = () => {
   // получаем state из cartSlice
@@ -49,15 +48,16 @@ export const Cart = () => {
 
   // const getTotalPrice = (list) => list.reduce((acc, item, i, arr) => +acc + +item.price, 0);
 
-  // todo to util.js
   const getTotalPrice = (items) => {
     const total = items.reduce((acc, item) => (acc + item.count * item.price), 0);
-    const formatter = new Intl.NumberFormat('ru', {
-      style: 'currency',
-      currency: 'RUB',
-    });
-    return formatter.format(total);
+    // const formatter = new Intl.NumberFormat('ru', {
+    //   style: 'currency',
+    //   currency: 'RUB',
+    // });
+    // return formatter.format(total);
+    return formatNumber(total);
   }
+
 
   return (
     <>
