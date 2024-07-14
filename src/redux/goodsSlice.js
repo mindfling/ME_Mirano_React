@@ -6,7 +6,7 @@ const URL = `${API_LOCAL}/api/products`;
 
 export const fetchGoods = createAsyncThunk("goods/fetchGoods",
   async () => {
-    return await fetch(URL)
+    return fetch(`${API_LOCAL}/api/products`)
       .then((response => response.json()))
       .catch((error) => error.message);
 });
@@ -28,7 +28,7 @@ const goodsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchGoods.fulfilled, (state, action) => {
-        state.status = "success"; // success
+        state.status = "success"; // succeded successed ?
         state.items = action.payload;
       })
       .addCase(fetchGoods.rejected, (state, action) => {
