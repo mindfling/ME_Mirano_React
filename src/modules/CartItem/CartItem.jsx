@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import cart from './CartItem.module.scss';
 import { useState } from 'react';
 import { addItemToCart } from '../../redux/cartSlice';
-import { debounce } from '../../util';
+import { debounce, formatNumber } from '../../util';
 import { API_LOCAL } from '../../const';
 
 export const CartItem = ({ id, img, title, price, quantity = 1 }) => {
@@ -47,7 +47,7 @@ export const CartItem = ({ id, img, title, price, quantity = 1 }) => {
         />
         <button className={cart.counterBtn}>+</button>
       </div>
-      <p className={cart.price}>{price}&nbsp;₽</p>
+      <p className={cart.price}>{formatNumber(price)}</p>
     </li>
   );
 };

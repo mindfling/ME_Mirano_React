@@ -13,9 +13,8 @@ export const Cart = () => {
   const dispatch = useDispatch(); // диспетчер передает действие обратно в Redux
 
   const isOpen = useSelector((state) => state.cart.isOpen); // селектор получает состояние из Redux
-  const items = useSelector((state) => state.cart.items);
+  const goodsInCart = useSelector((state) => state.cart.items);
   const count = useSelector((state) => state.cart.items.length);
-
 
   const cartRef = useRef(null);
 
@@ -35,35 +34,26 @@ export const Cart = () => {
   // открываем закрываем Корзину при изменении isOpen
   useEffect(() => {
     if (isOpen) {
-      console.log('scrolll cart ref');
-      cartRef.current.scrollIntoView({ behavior: 'smooth' });
+      console.log("scrolll cart ref");
+      cartRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [isOpen, count]);
-  
-
 
   // если окно isOpen false то просто выходим
   if (!isOpen) return null;
 
-
   // const getTotalPrice = (list) => list.reduce((acc, item, i, arr) => +acc + +item.price, 0);
 
-  const getTotalPrice = (items) => {
-    const total = items.reduce((acc, item) => (acc + item.count * item.price), 0);
-    // const formatter = new Intl.NumberFormat('ru', {
-    //   style: 'currency',
-    //   currency: 'RUB',
-    // });
-    // return formatter.format(total);
-    return formatNumber(total);
-  }
-
-
+  const getTotalPrice = (items) =>
+    items.reduce((acc, item) => acc + item.count * item.price, 0);
+  
   return (
     <>
-      <section className={`cart cart_${isOpen ? "open" : "close"}`} ref={cartRef}>
+      <section
+        className={`cart cart_${isOpen ? "open" : "close"}`}
+        ref={cartRef}
+      >
         {isOpen && (
-          <>
             <div className="cart__container">
               <div className="cart__header">
                 <h3 className="cart__title">Ваш заказ <b>{count}&nbsp;шт</b></h3>
@@ -100,28 +90,28 @@ export const Cart = () => {
                 </button>
               </div>
 
-              <p className="cart__date-delivery">сегодня в 14:00</p>
+              <p className="cart__date-delivery">{`сегодня в 14:00`}</p>
 
               <ul className="cart__list">
-                {items.map((item) => {
+                {goodsInCart.map((item) => {
                   return <CartItem key={item.id} {...item} />;
                 })}
               </ul>
 
               <div className="cart__footer">
-                <button className="cart__order-btn" onClick={handlerOrderOpen} disabled={!items.length} >
+                <button
+                  className="cart__order-btn"
+                  onClick={handlerOrderOpen}
+                  disabled={!goodsInCart.length}
+                >
                   Оформить
                 </button>
 
                 <p className="cart__price cart__price_total">
-                  {/* {totalPrice}&nbsp;₽ */}
-                  {/* {items.reduce((acc, item) => acc + item.price * item.count, 0)} */}
-                  {getTotalPrice(items)}
-                  {/* &nbsp;₽ */}
+                  {formatNumber(getTotalPrice(goodsInCart))}
                 </p>
               </div>
             </div>
-          </>
         )}
       </section>
     </>

@@ -24,7 +24,7 @@ export const Goods = () => {
   let content = null;
 
   if (goodsStatus === "loading") {
-    content = <h3 className="goods__list">Загружаем товары . . . :)</h3>;
+    content = <h3 className="goods__list">Загружаем товары . . . &#128578;</h3>;
   }
 
   if (goodsStatus === "success") {
@@ -55,6 +55,10 @@ export const Goods = () => {
         <p>{error}</p>
       </>
     );
+  }
+
+  if (!goods || goods.length === 0) {
+    content = <p>Нет товаров для отображения &#129323;</p>
   }
 
 

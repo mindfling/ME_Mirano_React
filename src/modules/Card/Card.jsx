@@ -4,13 +4,14 @@ import classNames from "classnames";
 import { addItemToCart } from "../../redux/cartSlice";
 import { API_LOCAL } from "../../const";
 import { useState } from "react";
+import { formatNumber } from "../../util";
 
 // деструктуризируем обьект ...item
 export const Card = ({ className, id, photoUrl: img, name: title, price, dateDelivery, note }) => {
   const dispatch = useDispatch();
 
-  const [buttonText, setButtonText] = useState(`${price}\u00a0\u00a3\u00a0`);
-  // setButtonText(`${price}\u00a0\u00a3\u00a0`);
+  const [buttonText, setButtonText] = useState(`${formatNumber(price)}`);
+  // setButtonText(`${price}\u00a0₽`);
   // setButtonText(() => "{price}&nbsp;₽");
 
 
@@ -35,8 +36,8 @@ export const Card = ({ className, id, photoUrl: img, name: title, price, dateDel
           <button
             className="card__button"
             onClick={handlerAddToCart}
-            onMouseEnter={() => setButtonText("В корзину")}
-            onMouseLeave={() => setButtonText(`${price}\u00a0\u00a3\u00a0`)}
+            onMouseEnter={() => setButtonText(`В\u00a0корзину`)}
+            onMouseLeave={() => setButtonText(`${formatNumber(price)}`)}
           >
             {buttonText}
           </button>
