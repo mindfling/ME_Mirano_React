@@ -25,7 +25,27 @@ export const Filter = () => {
   // * Maks handler
   const handleTypeChange = ({ target }) => {
     const { value } = target;
+    console.log('target: ', target);
     const newFilters = { ...filters, type: value };
+    setFilters(() => newFilters);
+  };
+
+  const handlePriceChange = ({ target }) => {
+    const { name, value } = target;
+    console.log('Price target: ', target);
+    console.log('Price value: ', value);
+    console.log('Price name: ', name);
+    const newFilters = { ...filters, [name]: value ? parseInt(value) : '' };
+    setFilters(() => newFilters);
+  };
+
+
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    console.log('target: ', target);
+    console.log('value: ', value);
+    console.log('name: ', name);
+    const newFilters = { ...filters, [name]: value };
     setFilters(() => newFilters);
   };
 
@@ -70,7 +90,7 @@ export const Filter = () => {
 
   useEffect(() => {
     dispatch(fetchGoods(getValidFilters(filters)));
-  });
+  }, [dispatch, filters]);
 
   return (
     <>
@@ -95,7 +115,7 @@ export const Filter = () => {
                     value={item.value}
                     id={item.id}
                     checked={item.value === filters.type}
-                    onChange={handleTypeChange}
+                    onChange={handleChange}
                   />
                   <label
                     className={"filter__label filter__label_" + item.id}
@@ -122,6 +142,7 @@ export const Filter = () => {
                     name="minPrice"
                     placeholder="от"
                     value={filters.minPrice}
+                    onChange={handlePriceChange}
                   />
                   <input
                     className="filter__input-price"
@@ -129,6 +150,7 @@ export const Filter = () => {
                     name="maxPrice"
                     placeholder="до"
                     value={filters.maxPrice}
+                    onChange={handlePriceChange}
                   />
                 </fieldset>
               </Choices>
