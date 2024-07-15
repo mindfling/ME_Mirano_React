@@ -3,6 +3,7 @@ import { Choices } from "../Choices/Choices";
 import "./filter.scss";
 import { useDispatch } from "react-redux";
 import { fetchGoods } from "../../redux/goodsSlice";
+import { getValidFilters } from "../../util";
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -10,8 +11,8 @@ export const Filter = () => {
 
   const [filters, setFilters] = useState({
     type: "bouquets",
-    minPrice: "0",
-    maxPrice: "2500",
+    minPrice: "",
+    maxPrice: "",
     category: "",
   });
 
@@ -68,7 +69,7 @@ export const Filter = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchGoods(filters));
+    dispatch(fetchGoods(getValidFilters(filters)));
   });
 
   return (
