@@ -3,7 +3,44 @@ import { Choices } from "../Choices/Choices";
 import "./filter.scss";
 import { FilterRadio } from "../FilterRadio/FilterRadio";
 
+// todo filter radio menu buttons
+
 export const Filter = () => {
+  const [openChoice, setOpenChoice] = useState(null);
+
+  const [filters, setFilters] = useState({
+    type: "bouquets",
+    minPrice: '',
+    maxPrice: "",
+    category: "",
+  });
+
+  const onChangeHandler = (e) => {
+    console.log(`e.target.value`, e.target.value);
+    setFilters((filters) => ({ ...filters, type: e.target.value}) );
+    console.log('filters: ', filters);
+  };
+
+  const filterTypes = [
+    {
+      id: "flower",
+      name: "type",
+      value: "bouquets",
+      text: "Цветы",
+    },
+    {
+      name: "type",
+      value: "toys",
+      id: "toys",
+      text: "Игрушки",
+    },
+    {
+      name: "type",
+      value: "postcards",
+      id: "postcard",
+      text: "Открытки",
+    },
+  ];
   const [prodTypeArray] = useState([
     "Монобукеты",
     "Авторские букеты",
@@ -15,19 +52,19 @@ export const Filter = () => {
     Math.floor(Math.random() * prodTypeArray.length)
   );
 
-  // "price" | "type" | "none"
-  const listTypes = ["price", "type", "none"];
   const choicesType = {
     price: 0,
     type: 1,
     none: null,
   };
 
-  const [openChoice, setOpenChoice] = useState(choicesType.none);
+  // const [openChoice, setOpenChoice] = useState(choicesType.none);
 
   const handleChoicesToggle = (index) => {
-    setOpenChoice(openChoice === index ? choicesType.none : index); // инвертируем открытый Choices
+    setOpenChoice(openChoice === index ? choicesType.none : index);
   };
+
+  console.log(`filters.type`, filters.type);
 
   return (
     <>
@@ -35,17 +72,35 @@ export const Filter = () => {
         <h2 className="visually-hidden"></h2>
         <div className="container">
           <form className="filter__form">
-
+          
             {/* 3шт radio buttons */}
             <fieldset className="filter__group filter__group_radio">
+              {/* <FilterRadio /> */}
 
-              <FilterRadio />
+              {/* Radio Цветы */}
+              {/* Radio Игрушки */}
+              {/* Radio Открытки */}
 
-              {/* Цветы */}
+              {filterTypes.map((item, index) => (
+                <div className="radioitem" key={index}>
+                  <input
+                    className="filter__radio"
+                    type="radio"
+                    name="type"
+                    value={item.value}
+                    id={item.id}
+                    checked={item.value === filters.type}
+                    onChange={onChangeHandler}
+                  />
+                  <label
+                    className={"filter__label filter__label_" + item.id}
+                    htmlFor={item.id}
+                  >
+                    {item.text}
+                  </label>
+                </div>
+              ))}
 
-              {/* Игрушки */}
-
-              {/* Открытки */}
               {/* 
               <input
                 className="filter__radio"
@@ -62,7 +117,6 @@ export const Filter = () => {
               </label>
               */}
             </fieldset>
-
 
             <fieldset className="filter__group filter__group_choices">
               {/* Цена `price` "0" */}
@@ -87,7 +141,6 @@ export const Filter = () => {
                   />
                 </fieldset>
               </Choices>
-
 
               {/* тип товара `type` "1" */}
               <Choices
