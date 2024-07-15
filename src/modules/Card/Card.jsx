@@ -7,17 +7,34 @@ import { useState } from "react";
 import { formatNumber } from "../../util";
 
 // деструктуризируем обьект ...item
-export const Card = ({ className, id, photoUrl: img, name: title, price, dateDelivery, note }) => {
+export const Card = ({
+  className,
+  id,
+  photoUrl: img,
+  name: title,
+  price,
+  dateDelivery,
+  note,
+}) => {
   const dispatch = useDispatch();
 
   const [buttonText, setButtonText] = useState(`${formatNumber(price)}`);
-  // setButtonText(`${price}\u00a0₽`);
-  // setButtonText(() => "{price}&nbsp;₽");
+  // `\u00a0\u20bd`
+  // `&nbsp;₽`
 
 
   const handlerAddToCart = () => {
     dispatch(addItemToCart({ id, img, title, price, dateDelivery, note }));
   };
+
+  const handlerMouseEnter = () => {
+    setButtonText(`В\u00a0корзину`);
+  }
+
+  const handlerMouseLeave = () => {
+    setButtonText(`${formatNumber(price)}`);
+  }
+
 
   return (
     <article
@@ -36,8 +53,8 @@ export const Card = ({ className, id, photoUrl: img, name: title, price, dateDel
           <button
             className="card__button"
             onClick={handlerAddToCart}
-            onMouseEnter={() => setButtonText(`В\u00a0корзину`)}
-            onMouseLeave={() => setButtonText(`${formatNumber(price)}`)}
+            onMouseEnter={() => handlerMouseEnter()}
+            onMouseLeave={() => handlerMouseLeave()}
           >
             {buttonText}
           </button>

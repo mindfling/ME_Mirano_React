@@ -9,110 +9,103 @@ import { formatNumber } from "../../util";
 
 
 export const Cart = () => {
-  // получаем state из cartSlice
-  const dispatch = useDispatch(); // диспетчер передает действие обратно в Redux
+  const dispatch = useDispatch();
 
-  const isOpen = useSelector((state) => state.cart.isOpen); // селектор получает состояние из Redux
+  const isOpen = useSelector((state) => state.cart.isOpen);
   const goodsInCart = useSelector((state) => state.cart.items);
   const count = useSelector((state) => state.cart.items.length);
 
   const cartRef = useRef(null);
 
-  
-  // обработчик закрытия корзины
-  const handlerCartClose = () => {
-    // dispatch принимает actionCreator() toggleCart
-    dispatch(toggleCart());
-  };
-
-  // закрываем корзину и переходим к оформлению заказа Order
-  const handlerOrderOpen = () => {
-    dispatch(openModal()); // открыть модальн окно
-    // dispatch(toggleCart()); // закрыть корзину
-  };
-
-  // открываем закрываем Корзину при изменении isOpen
   useEffect(() => {
     if (isOpen) {
-      console.log("scrolll cart ref");
       cartRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [isOpen, count]);
 
-  // если окно isOpen false то просто выходим
+
+  const handlerCartClose = () => {
+    dispatch(toggleCart());
+  };  
+
+  const handlerOrderOpen = () => {
+    dispatch(openModal()); // открыть модальн окно
+  };  
+
+
   if (!isOpen) return null;
 
-  // const getTotalPrice = (list) => list.reduce((acc, item, i, arr) => +acc + +item.price, 0);
+  // const getTotalPrice = (list) =>
+  //   list.reduce((acc, item, i, arr) => +acc + +item.price, 0);
 
   const getTotalPrice = (items) =>
     items.reduce((acc, item) => acc + item.count * item.price, 0);
-  
+
   return (
     <>
       <section
-        className={`cart cart_${isOpen ? "open" : "close"}`}
-        ref={cartRef}
+        className={`cart cart_${isOpen ? "open" : "close"}`} ref={cartRef}
       >
-        {isOpen && (
-            <div className="cart__container">
-              <div className="cart__header">
-                <h3 className="cart__title">Ваш заказ <b>{count}&nbsp;шт</b></h3>
+        <div className="cart__container">
+          <div className="cart__header">
+            <h3 className="cart__title">
+              Ваш заказ <b>{count}&nbsp;шт</b>
+            </h3>
 
-                <button
-                  className="cart__closeBtn"
-                  onClick={handlerCartClose}
-                  title="Открыть корзину заказов"
-                >
-                  <svg
-                    width="28"
-                    height="28"
-                    viewBox="0 0 28 28"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
-                      x="5"
-                      y="5.70715"
-                      width="1"
-                      height="25"
-                      transform="rotate(-45 5 5.70715)"
-                      fill="#D17D2F"
-                    />
-                    <rect
-                      x="22.6777"
-                      y="5"
-                      width="1"
-                      height="25"
-                      transform="rotate(45 22.6777 5)"
-                      fill="#D17D2F"
-                    />
-                  </svg>
-                </button>
-              </div>
+            <button
+              className="cart__closeBtn"
+              onClick={handlerCartClose}
+              title="Открыть корзину заказов"
+            >
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="5"
+                  y="5.70715"
+                  width="1"
+                  height="25"
+                  transform="rotate(-45 5 5.70715)"
+                  fill="#D17D2F"
+                />
+                <rect
+                  x="22.6777"
+                  y="5"
+                  width="1"
+                  height="25"
+                  transform="rotate(45 22.6777 5)"
+                  fill="#D17D2F"
+                />
+              </svg>
+            </button>
+          </div>
 
-              <p className="cart__date-delivery">{`сегодня в 14:00`}</p>
+          <p className="cart__date-delivery">{`сегодня в 14:00`}</p>
 
-              <ul className="cart__list">
-                {goodsInCart.map((item) => {
-                  return <CartItem key={item.id} {...item} />;
-                })}
-              </ul>
+          <ul className="cart__list">
+            {goodsInCart.map((item) => {
+              return <CartItem key={item.id} {...item} />;
+            })}
+          </ul>
 
-              <div className="cart__footer">
-                <button
-                  className="cart__order-btn"
-                  onClick={handlerOrderOpen}
-                  disabled={!goodsInCart.length}
-                >
-                  Оформить
-                </button>
+          <div className="cart__footer">
+            <button
+              className="cart__order-btn"
+              onClick={handlerOrderOpen}
+              disabled={!goodsInCart.length}
+            >
+              Оформить
+            </button>
 
-                <p className="cart__price cart__price_total">
-                  {formatNumber(getTotalPrice(goodsInCart))}
-                </p>
-              </div>
-            </div>
-        )}
+            <p className="cart__price cart__price_total">
+              {formatNumber(getTotalPrice(goodsInCart))}
+            </p>
+          </div>
+        </div>
       </section>
     </>
   );
