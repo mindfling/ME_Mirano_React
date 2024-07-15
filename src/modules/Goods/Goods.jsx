@@ -13,18 +13,22 @@ export const Goods = () => {
     error,
   } = useSelector((state) => state.goods);
 
-  const [label] = useState("Цветы");
+  const defaultLabel = "Цветы";
+  const [label] = useState(defaultLabel);
+
+  const defaultType = "bouquets";
 
   useEffect(() => {
     if (goodsStatus === "idle") {
-      dispatch(fetchGoods()); // загружаем товары
+      dispatch(fetchGoods({ type: defaultType })); // загружаем товары по умолчанию
+      // dispatch(fetchGoods()); // загружаем товары по умолчанию
     }
   }, [dispatch, goodsStatus]);
 
   let content = null;
 
   if (goodsStatus === "loading") {
-    content = <h3 className="goods__list">Загружаем товары . . . &#128578;</h3>;
+    content = <h3 className="goods__list">Загружаем товары . . .</h3>;
   }
 
   if (goodsStatus === "success") {
@@ -58,9 +62,8 @@ export const Goods = () => {
   }
 
   if (!goods || goods.length === 0) {
-    content = <p>Нет товаров для отображения &#129323;</p>
+    content = <p>Нет товаров для отображения</p>;
   }
-
 
   return (
     <>
