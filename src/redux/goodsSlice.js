@@ -4,12 +4,35 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // const URL = `${API_URL}/api/products`;
 const URL = `${API_LOCAL}/api/products`;
 
-export const fetchGoods = createAsyncThunk("goods/fetchGoods",
-  async () => {
-    return fetch(`${API_LOCAL}/api/products`)
+
+export const fetchGoods = createAsyncThunk(
+  "goods/fetchGoods",
+  async (params) => {
+    const queryString = new URLSearchParams(params).toString();
+    const url = `${API_LOCAL}/api/products${queryString ? `?${queryString}` : ""}`;
+
+    return fetch(url)
       .then((response => response.json()))
       .catch((error) => error.message);
 });
+
+
+/*
+export const fetchGoods = createAsyncThunk(
+  "goods/fetchGoods",
+  async (params) => {
+    const queryString = new URLSearchParams(params).toString();
+    const response = await fetch(
+      `${API_LOCAL}/api/products${queryString ? `?${queryString}` : ""}`,
+    );
+
+    if (!response.ok) {
+      throw new Error('Ошибка получения товаров в goodsSlice fetchGoods');
+    }
+
+    return await response.json();
+});
+*/
 
 
 const initialState = {
