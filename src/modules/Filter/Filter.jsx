@@ -1,24 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Choices } from "../Choices/Choices";
 import "./filter.scss";
-import { FilterRadio } from "../FilterRadio/FilterRadio";
-
-// todo filter radio menu buttons
+import { useDispatch } from "react-redux";
+import { fetchGoods } from "../../redux/goodsSlice";
 
 export const Filter = () => {
+  const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
 
   const [filters, setFilters] = useState({
     type: "bouquets",
-    minPrice: '',
-    maxPrice: "",
+    minPrice: "0",
+    maxPrice: "2500",
     category: "",
   });
 
-  const onChangeHandler = (e) => {
-    console.log(`e.target.value`, e.target.value);
-    setFilters((filters) => ({ ...filters, type: e.target.value}) );
-    console.log('filters: ', filters);
+  // * my handler
+  // const handleTypeChange = (e) => {
+  //   setFilters((filters) => ({ ...filters, type: e.target.value }) );
+  // };
+
+
+  // * Maks handler
+  const handleTypeChange = ({ target }) => {
+    const { value } = target;
+    const newFilters = { ...filters, type: value };
+    setFilters(() => newFilters);
   };
 
   const filterTypes = [
@@ -48,9 +55,7 @@ export const Filter = () => {
     "Цветы в корзине",
     "Букеты из сухоцветов",
   ]);
-  const [activeTypeIndex, setActiveType] = useState(
-    Math.floor(Math.random() * prodTypeArray.length)
-  );
+
 
   const choicesType = {
     price: 0,
@@ -58,13 +63,13 @@ export const Filter = () => {
     none: null,
   };
 
-  // const [openChoice, setOpenChoice] = useState(choicesType.none);
-
   const handleChoicesToggle = (index) => {
-    setOpenChoice(openChoice === index ? choicesType.none : index);
+    setOpenChoice(openChoice === index ? null : index);
   };
 
-  console.log(`filters.type`, filters.type);
+  useEffect(() => {
+    dispatch(fetchGoods(filters));
+  });
 
   return (
     <>
@@ -72,7 +77,6 @@ export const Filter = () => {
         <h2 className="visually-hidden"></h2>
         <div className="container">
           <form className="filter__form">
-          
             {/* 3шт radio buttons */}
             <fieldset className="filter__group filter__group_radio">
               {/* <FilterRadio /> */}
@@ -90,7 +94,7 @@ export const Filter = () => {
                     value={item.value}
                     id={item.id}
                     checked={item.value === filters.type}
-                    onChange={onChangeHandler}
+                    onChange={handleTypeChange}
                   />
                   <label
                     className={"filter__label filter__label_" + item.id}
@@ -100,22 +104,6 @@ export const Filter = () => {
                   </label>
                 </div>
               ))}
-
-              {/* 
-              <input
-                className="filter__radio"
-                type="radio"
-                name="type"
-                value="postcards"
-                id="postcard"
-              />
-              <label
-                className="filter__label filter__label_postcard"
-                htmlFor="postcard"
-              >
-                Открытки
-              </label>
-              */}
             </fieldset>
 
             <fieldset className="filter__group filter__group_choices">
@@ -132,12 +120,14 @@ export const Filter = () => {
                     type="text"
                     name="minPrice"
                     placeholder="от"
+                    value={filters.minPrice}
                   />
                   <input
                     className="filter__input-price"
                     type="text"
                     name="maxPrice"
                     placeholder="до"
+                    value={filters.maxPrice}
                   />
                 </fieldset>
               </Choices>
@@ -154,7 +144,7 @@ export const Filter = () => {
                     <li className="filter__type-item" key={index}>
                       <button
                         className={`filter__type-button ${
-                          index === activeTypeIndex
+                          index === 0
                             ? "filter__type-button_active"
                             : ""
                         }`}

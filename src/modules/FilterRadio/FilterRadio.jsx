@@ -26,14 +26,8 @@ export const FilterRadio = () => {
   ];
 
   
-  // const handleTypeChange = (e) => {
-  //   console.log(e.target, e.target.value);
-  // };
-
-  // todo with Redux
   const onChangeHandler = (e) => {
     setCurrentType(() => e.target.value);
-    console.log("Radio changed", `e.target.value`, e.target.value);
   };
 
   return filterTypes.map((item, index) => (
@@ -45,7 +39,6 @@ export const FilterRadio = () => {
         value={item.value}
         id={item.id}
         checked={item.value === currentType}
-        // onClick={handleTypeChange}
         onChange={onChangeHandler}
       />
       <label
