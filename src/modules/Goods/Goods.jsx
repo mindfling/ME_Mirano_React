@@ -1,29 +1,31 @@
 import "./goods.scss";
 import { Card } from "../Card/Card";
 import { Cart } from "../Cart/Cart";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchGoods } from "../../redux/goodsSlice";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+// import { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { fetchGoods } from "../../redux/goodsSlice";
 
 export const Goods = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const {
     items: goods,
     status: goodsStatus,
     error,
   } = useSelector((state) => state.goods);
 
-  const defaultLabel = "Цветы";
-  const [label] = useState(defaultLabel);
+  const defaultTitle = "Цветы";
+  const [label] = useState(defaultTitle);
 
-  const defaultType = "bouquets";
+  // // товары загружаются все в Filters
+  // const defaultType = "bouquets";
+  // useEffect(() => {
+  //   if (goodsStatus === "idle") {
+  //     dispatch(fetchGoods({ type: defaultType }));
+  //   }
+  // }, [dispatch, goodsStatus]);
 
-  useEffect(() => {
-    if (goodsStatus === "idle") {
-      dispatch(fetchGoods({ type: defaultType })); // загружаем товары по умолчанию
-      // dispatch(fetchGoods()); // загружаем товары по умолчанию
-    }
-  }, [dispatch, goodsStatus]);
 
   let content = null;
 

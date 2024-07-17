@@ -3,7 +3,7 @@ import { Choices } from "../Choices/Choices";
 import "./filter.scss";
 import { useDispatch } from "react-redux";
 import { fetchGoods } from "../../redux/goodsSlice";
-import { getValidFilters } from "../../util";
+import { debounce, getValidFilters } from "../../util";
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -16,25 +16,21 @@ export const Filter = () => {
     category: "",
   });
 
-  // * my handler
-  // const handleTypeChange = (e) => {
+
+  // const handleMyTypeChange = (e) => {
   //   setFilters((filters) => ({ ...filters, type: e.target.value }) );
   // };
 
 
-  // * Maks handler
-  const handleTypeChange = ({ target }) => {
-    const { value } = target;
-    console.log('target: ', target);
-    const newFilters = { ...filters, type: value };
-    setFilters(() => newFilters);
-  };
+  // const handleTypeChange = ({ target }) => {
+  //   const { value } = target;
+  //   const newFilters = { ...filters, type: value };
+  //   setFilters(() => newFilters);
+  // };
+
 
   const handlePriceChange = ({ target }) => {
     const { name, value } = target;
-    console.log('Price target: ', target);
-    console.log('Price value: ', value);
-    console.log('Price name: ', name);
     const newFilters = { ...filters, [name]: value ? parseInt(value) : '' };
     setFilters(() => newFilters);
   };
@@ -42,9 +38,6 @@ export const Filter = () => {
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    console.log('target: ', target);
-    console.log('value: ', value);
-    console.log('name: ', name);
     const newFilters = { ...filters, [name]: value };
     setFilters(() => newFilters);
   };
@@ -77,20 +70,30 @@ export const Filter = () => {
     "Букеты из сухоцветов",
   ]);
 
-
   const choicesType = {
     price: 0,
     type: 1,
     none: null,
   };
 
+
   const handleChoicesToggle = (index) => {
     setOpenChoice(openChoice === index ? null : index);
   };
 
+
+  const debouncedFetchGoods = debounce((filters) => {
+    const validFilters = getValidFilters(filters);
+    dispatch(fetchGoods(validFilters));
+  }, 500);
+  // todo задержка времени вызова
+  // todo useRef для сохранения после перезагрузки
+
+
   useEffect(() => {
-    dispatch(fetchGoods(getValidFilters(filters)));
-  }, [dispatch, filters]);
+    debouncedFetchGoods(filters);
+  }, [debouncedFetchGoods, filters]);
+
 
   return (
     <>
@@ -98,14 +101,8 @@ export const Filter = () => {
         <h2 className="visually-hidden"></h2>
         <div className="container">
           <form className="filter__form">
-            {/* 3шт radio buttons */}
             <fieldset className="filter__group filter__group_radio">
-              {/* <FilterRadio /> */}
-
-              {/* Radio Цветы */}
-              {/* Radio Игрушки */}
-              {/* Radio Открытки */}
-
+            {/* 3шт radio buttons */}
               {filterTypes.map((item, index) => (
                 <div className="radioitem" key={index}>
                   <input
