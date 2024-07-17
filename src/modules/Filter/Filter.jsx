@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Choices } from "../Choices/Choices";
 import "./filter.scss";
 import { useDispatch } from "react-redux";
@@ -82,10 +82,10 @@ export const Filter = () => {
   };
 
 
-  const debouncedFetchGoods = debounce((filters) => {
+  const debouncedFetchGoods = useRef(debounce((filters) => {
     const validFilters = getValidFilters(filters);
     dispatch(fetchGoods(validFilters));
-  }, 500);
+  }, 500)).current;
   // todo задержка времени вызова
   // todo useRef для сохранения после перезагрузки
 
@@ -93,7 +93,7 @@ export const Filter = () => {
   useEffect(() => {
     debouncedFetchGoods(filters);
   }, [debouncedFetchGoods, filters]);
-
+  
 
   return (
     <>
