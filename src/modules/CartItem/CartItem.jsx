@@ -3,7 +3,7 @@ import cart from './CartItem.module.scss';
 import { useState } from 'react';
 import { addItemToCart } from '../../redux/cartSlice';
 import { debounce, formatNumber } from '../../util';
-import { API_LOCAL } from '../../const';
+import { API_URL } from '../../const';
 
 export const CartItem = ({ id, img, title, price, quantity = 1 }) => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export const CartItem = ({ id, img, title, price, quantity = 1 }) => {
 
   return (
     <li className={cart.item} title={title}>
-      <img className={cart.img} src={`${API_LOCAL}${img}`} alt={title} />
+      <img className={cart.img} src={`${API_URL}${img}`} alt={title} />
       <h4 className={cart.itemTitle}>{title}</h4>
       <div className={cart.counter}>
         <button className={cart.counterBtn}>-</button>

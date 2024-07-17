@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import "./card.scss";
 import classNames from "classnames";
 import { addItemToCart } from "../../redux/cartSlice";
-import { API_LOCAL } from "../../const";
+import { API_URL} from "../../const";
 import { useState } from "react";
 import { formatNumber } from "../../util";
 
@@ -43,7 +43,7 @@ export const Card = ({
     >
       <img
         className="card__image"
-        src={`${API_LOCAL}${img}`}
+        src={`${API_URL}${img}`}
         alt={`Товар ${title}, артикул ${id}`}
       />
       <div className="card__content">
