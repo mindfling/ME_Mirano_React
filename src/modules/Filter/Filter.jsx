@@ -1,26 +1,50 @@
 import { useEffect, useRef, useState } from "react";
 import { Choices } from "../Choices/Choices";
 import "./filter.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchGoods } from "../../redux/goodsSlice";
 import { debounce, getValidFilters } from "../../util";
 
 export const Filter = () => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
+  const statusGoods = useSelector((state) => state.goods.status); // todo а надо ли это ?
 
   const [filters, setFilters] = useState({
-    type: "bouquets",
-    minPrice: "",
-    maxPrice: "",
-    category: "",
+    "type": "bouquets",
+    "minPrice": "",
+    "maxPrice": "",
+    "category": "",
   });
+
+  const prevFiltesRef = useRef(filters);
+
+  const debouncedFetchGoods = useRef(
+    debounce((filters) => {
+      dispatch(fetchGoods(filters));
+    }, 350)
+  ).current;
+  // todo задержка времени вызова
+  // useRef для сохранения после перезагрузки
+
+  useEffect(() => {
+    const prevFiltes = prevFiltesRef.current;
+    const validFilters = getValidFilters(filters); // валидируем строку запросов фильтров
+
+    // поменялся ли тип type radio button
+    if (prevFiltes.type !== filters.type || statusGoods === 'idle') {
+      dispatch(fetchGoods(validFilters)); // вызов сразу
+    } else {
+      debouncedFetchGoods(validFilters); // вызов с задержкой
+    }
+
+    prevFiltesRef.current = filters; // обновляем предыдущее состояние фильтров
+  }, [dispatch, debouncedFetchGoods, filters]); // todo исправить здесь statusGoods !!!
 
 
   // const handleMyTypeChange = (e) => {
   //   setFilters((filters) => ({ ...filters, type: e.target.value }) );
   // };
-
 
   // const handleTypeChange = ({ target }) => {
   //   const { value } = target;
@@ -28,25 +52,25 @@ export const Filter = () => {
   //   setFilters(() => newFilters);
   // };
 
-
   const handlePriceChange = ({ target }) => {
     const { name, value } = target;
-    const newFilters = { ...filters, [name]: value ? parseInt(value) : '' };
+    const newFilters = { ...filters, [name]: value ? parseInt(value) : "" };
     setFilters(() => newFilters);
   };
-
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    const newFilters = { ...filters, [name]: value };
+    const newFilters = { ...filters, [name]: value, minPrice: '', maxPrice: '' }; // обновляем значения фильтров
     setFilters(() => newFilters);
+    setOpenChoice(() => -1); // закрываем остальные Choices
   };
 
+  // типы товаров в FilterRadio
   const filterTypes = [
     {
-      id: "flower",
       name: "type",
       value: "bouquets",
+      id: "flower",
       text: "Цветы",
     },
     {
@@ -62,6 +86,8 @@ export const Filter = () => {
       text: "Открытки",
     },
   ];
+
+  // категории букетов в Filter Choices
   const [prodTypeArray] = useState([
     "Монобукеты",
     "Авторские букеты",
@@ -76,24 +102,9 @@ export const Filter = () => {
     none: null,
   };
 
-
   const handleChoicesToggle = (index) => {
     setOpenChoice(openChoice === index ? null : index);
   };
-
-
-  const debouncedFetchGoods = useRef(debounce((filters) => {
-    const validFilters = getValidFilters(filters);
-    dispatch(fetchGoods(validFilters));
-  }, 500)).current;
-  // todo задержка времени вызова
-  // todo useRef для сохранения после перезагрузки
-
-
-  useEffect(() => {
-    debouncedFetchGoods(filters);
-  }, [debouncedFetchGoods, filters]);
-  
 
   return (
     <>
@@ -102,7 +113,8 @@ export const Filter = () => {
         <div className="container">
           <form className="filter__form">
             <fieldset className="filter__group filter__group_radio">
-            {/* 3шт radio buttons */}
+
+              {/* 3шт radio buttons */}
               {filterTypes.map((item, index) => (
                 <div className="radioitem" key={index}>
                   <input
@@ -164,9 +176,7 @@ export const Filter = () => {
                     <li className="filter__type-item" key={index}>
                       <button
                         className={`filter__type-button ${
-                          index === 0
-                            ? "filter__type-button_active"
-                            : ""
+                          index === 0 ? "filter__type-button_active" : ""
                         }`}
                         type="button"
                       >
