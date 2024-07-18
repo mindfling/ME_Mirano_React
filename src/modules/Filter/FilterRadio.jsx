@@ -1,45 +1,65 @@
-import { useState } from "react";
+// filter radio menu buttons
+// типы товаров в FilterRadio
+// const filterTypes = [
+//   {
+//     name: "type",
+//     value: "bouquets",
+//     id: "flower",
+//     text: "Цветы",
+//   },
+//   {
+//     name: "type",
+//     value: "toys",
+//     id: "toys",
+//     text: "Игрушки",
+//   },
+//   {
+//     name: "type",
+//     value: "postcards",
+//     id: "postcard",
+//     text: "Открытки",
+//   },
+// ];
 
-export const FilterRadio = () => {
-  const [currentType, setCurrentType] = useState("postcards");
 
-  // filter radio menu buttons
-  // типы товаров в FilterRadio
-  const filterTypes = [
-    {
-      name: "type",
-      value: "bouquets",
-      id: "flower",
-      text: "Цветы",
-    },
-    {
-      name: "type",
-      value: "toys",
-      id: "toys",
-      text: "Игрушки",
-    },
-    {
-      name: "type",
-      value: "postcards",
-      id: "postcard",
-      text: "Открытки",
-    },
-  ];
+
+export const FilterRadio = ({
+  handleTypeChange, data, type,
+}) => {
   
-  const onChangeHandler = (e) => {
-    setCurrentType(() => e.target.value);
-  };
+  return (
+    <>
+      <input
+        className="filter__radio"
+        type="radio"
+        name="type"
+        value={data.value}
+        id={data.id}
+        checked={data.value === type}
+        onChange={handleTypeChange}
+      />
+      <label
+        className={`filter__label filter__label_${data.id}`}
+        htmlFor={data.id}
+      >
+        {data.title}
+      </label>
+    </>
+  )
+};
 
-  return filterTypes.map((item, index) => (
-    <div className="radioitem" key={index}>
+
+/*
+<div className="radioitem" key={index}>
+
       <input
         className="filter__radio"
         type="radio"
         name="type"
         value={item.value}
         id={item.id}
-        checked={item.value === currentType}
-        onChange={onChangeHandler}
+        checked={item.value === filters.type}
+        onChange={handleTypeChange}
       />
       <label
         className={"filter__label filter__label_" + item.id}
@@ -47,6 +67,5 @@ export const FilterRadio = () => {
       >
         {item.text}
       </label>
-    </div>
-  ));
-};
+</div>
+*/

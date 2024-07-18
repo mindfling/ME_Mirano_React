@@ -67,6 +67,7 @@
       min-height: 40px;
     }
 
+    &_bouquets,
     &_flower {
       background-image: url("/img/flowers.png");
     }
@@ -75,6 +76,7 @@
       background-image: url("/img/bear-toy.png");
     }
 
+    &_postcards,
     &_postcard {
       background-image: url("/img/postcard.png");
     }

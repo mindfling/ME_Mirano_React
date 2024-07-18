@@ -4,6 +4,7 @@ import "./filter.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGoods } from "../../redux/goodsSlice";
 import { debounce, getValidFilters } from "../../util";
+import { FilterRadio } from "./FilterRadio";
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -11,10 +12,10 @@ export const Filter = () => {
   const statusGoods = useSelector((state) => state.goods.status); // todo а надо ли это ?
 
   const [filters, setFilters] = useState({
-    "type": "bouquets",
-    "minPrice": "",
-    "maxPrice": "",
-    "category": "",
+    type: "bouquets",
+    minPrice: "",
+    maxPrice: "",
+    category: "",
   });
 
   const prevFiltesRef = useRef(filters);
@@ -32,7 +33,7 @@ export const Filter = () => {
     const validFilters = getValidFilters(filters); // валидируем строку запросов фильтров
 
     // поменялся ли тип type radio button
-    if (prevFiltes.type !== filters.type || statusGoods === 'idle') {
+    if (prevFiltes.type !== filters.type || statusGoods === "idle") {
       dispatch(fetchGoods(validFilters)); // вызов сразу
     } else {
       debouncedFetchGoods(validFilters); // вызов с задержкой
@@ -40,7 +41,6 @@ export const Filter = () => {
 
     prevFiltesRef.current = filters; // обновляем предыдущее состояние фильтров
   }, [dispatch, debouncedFetchGoods, filters]); // todo исправить здесь statusGoods !!!
-
 
   const handleChoicesToggle = (index) => {
     setOpenChoice(openChoice === index ? null : index);
@@ -54,27 +54,19 @@ export const Filter = () => {
 
   const handleTypeChange = ({ target }) => {
     const { value } = target;
-    const newFilters = { ...filters, type: value, minPrice: '', maxPrice: '' };
+    const newFilters = { ...filters, type: value, minPrice: "", maxPrice: "" };
     setFilters(() => newFilters);
     setOpenChoice(() => -1); // закрываем остальные Choices
   };
 
   const handlePriceChange = ({ target }) => {
     const { name, value } = target;
-    const newFilters = { ...filters, [name]: value ? parseInt(value) : "" };
+    const newFilters = {
+      ...filters,
+      [name]: !isNaN(parseInt(value, 10)) ? value : "",
+    };
     setFilters(() => newFilters);
   };
-  
-  // const handleMyTypeChange = (e) => {
-  //   setFilters((filters) => ({ ...filters, type: e.target.value }) );
-  // };
-
-  // const handleChange = ({ target }) => {
-  //   const { name, value } = target;
-  //   const newFilters = { ...filters, [name]: value}; // обновляем значения фильтров
-  //   setFilters(() => newFilters);
-  //   setOpenChoice(() => -1); // закрываем остальные Choices
-  // };
 
   // типы товаров в FilterRadio
   const filterTypes = [
@@ -82,19 +74,19 @@ export const Filter = () => {
       name: "type",
       value: "bouquets",
       id: "flower",
-      text: "Цветы",
+      title: "Цветы",
     },
     {
       name: "type",
       value: "toys",
       id: "toys",
-      text: "Игрушки",
+      title: "Игрушки",
     },
     {
       name: "type",
       value: "postcards",
       id: "postcard",
-      text: "Открытки",
+      title: "Открытки",
     },
   ];
 
@@ -107,7 +99,6 @@ export const Filter = () => {
     "Букеты из сухоцветов",
   ]);
 
-
   return (
     <>
       <section className="filter">
@@ -116,30 +107,19 @@ export const Filter = () => {
           <form className="filter__form">
             <fieldset className="filter__group filter__group_radio">
 
-              {/* 3шт radio buttons */}
               {filterTypes.map((item, index) => (
-                <div className="radioitem" key={index}>
-                  <input
-                    className="filter__radio"
-                    type="radio"
-                    name="type"
-                    value={item.value}
-                    id={item.id}
-                    checked={item.value === filters.type}
-                    onChange={handleTypeChange}
-                  />
-                  <label
-                    className={"filter__label filter__label_" + item.id}
-                    htmlFor={item.id}
-                  >
-                    {item.text}
-                  </label>
-                </div>
+                <FilterRadio
+                  key={item.value}
+                  handleTypeChange={handleTypeChange}
+                  data={item}
+                  type={filters.type}
+                  index={index}
+                />
               ))}
             </fieldset>
 
+
             <fieldset className="filter__group filter__group_choices">
-              {/* Цена `price` "0" */}
               <Choices
                 buttonLabel="Цены"
                 className="choices filter__choices_price"
@@ -166,7 +146,6 @@ export const Filter = () => {
                 </fieldset>
               </Choices>
 
-              {/* тип товара `type` "1" */}
               <Choices
                 buttonLabel="Тип товара"
                 className="choices filter__choices_type"
