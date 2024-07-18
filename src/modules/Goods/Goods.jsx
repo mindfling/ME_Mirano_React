@@ -7,14 +7,12 @@ import { useSelector } from "react-redux";
 // import { useDispatch, useSelector } from "react-redux";
 // import { fetchGoods } from "../../redux/goodsSlice";
 
-export const Goods = () => {
+export const Goods = ({ title }) => {
   const {
     items: goods,
     status: goodsStatus,
     error,
   } = useSelector((state) => state.goods);
-
-  const { siteTitle } = useSelector((state) => state.filter);
 
 
   let content = null;
@@ -62,7 +60,7 @@ export const Goods = () => {
       <section className="goods">
         <div className="container goods__container">
           <div className="goods__box">
-            <h2 className="goods__title">{siteTitle}</h2>
+            <h2 className="goods__title">{title}</h2>
             {!goods.length ? <>{content}</> : <>{content}</>}
           </div>
 

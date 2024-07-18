@@ -5,15 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGoods } from "../../redux/goodsSlice";
 import { debounce, getValidFilters } from "../../util";
 import { FilterRadio } from "./FilterRadio";
-import { changeTitle } from "../../redux/filterSlice";
 
-export const Filter = () => {
+export const Filter = ({ setTitleGoods }) => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
   const statusGoods = useSelector((state) => state.goods.status); // todo а надо ли это ?
 
   const [filters, setFilters] = useState({
-    type: 'none', // по умолчанию ни один filterType не выбран ищем все товары
+    type: "none", // по умолчанию ни один filterType не выбран ищем все товары
     minPrice: "", // минимальная цена в фильтрах
     maxPrice: "", // Максимальная цена в фильтрах
     category: "", // категория букетов
@@ -30,7 +29,6 @@ export const Filter = () => {
   ).current;
   // debounce задержка времени вызова
   // useRef для сохранения после перезагрузки
-
 
   useEffect(() => {
     const prevFiltes = prevFiltesRef.current;
@@ -56,24 +54,6 @@ export const Filter = () => {
     none: null, //? -1
   };
 
-  const handleTypeChange = ({ target }) => {
-    const { value } = target;
-    const newFilters = { ...filters, type: value, minPrice: "", maxPrice: "" };
-    setFilters(() => newFilters);
-    setOpenChoice(() => -1); // закрываем остальные Choices
-
-    // todo dispatch(changeTitle());
-  };
-
-  const handlePriceChange = ({ target }) => {
-    const { name, value } = target;
-    const newFilters = {
-      ...filters,
-      [name]: !isNaN(parseInt(value, 10)) ? value : "", //? что здесь происходит ??
-    };
-    setFilters(() => newFilters);
-  };
-
   // типы товаров в FilterRadio
   const filterTypes = [
     {
@@ -95,6 +75,26 @@ export const Filter = () => {
       title: "Открытки",
     },
   ];
+
+  const handleTypeChange = ({ target }) => {
+    const { value } = target;
+    const newFilters = { ...filters, type: value, minPrice: "", maxPrice: "" };
+    setFilters(() => newFilters);
+    setOpenChoice(() => -1); // закрываем остальные Choices
+    setTitleGoods(filterTypes.find((item) => item.value === value).title);
+
+    // todo dispatch(changeTitle());
+  };
+
+  const handlePriceChange = ({ target }) => {
+    const { name, value } = target;
+    const newFilters = {
+      ...filters,
+      [name]: !isNaN(parseInt(value, 10)) ? value : "", //? что здесь происходит ??
+    };
+    setFilters(() => newFilters);
+  };
+
 
   // категории букетов в Filter Choices
   const [prodTypeArray] = useState([
@@ -123,7 +123,6 @@ export const Filter = () => {
                 />
               ))}
             </fieldset>
-
 
             <fieldset className="filter__group filter__group_choices">
               <Choices
