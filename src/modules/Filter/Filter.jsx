@@ -12,7 +12,7 @@ export const Filter = ({ setTitleGoods }) => {
   const statusGoods = useSelector((state) => state.goods.status); // todo а надо ли это ?
 
   const [filters, setFilters] = useState({
-    type: "none", // по умолчанию ни один filterType не выбран ищем все товары
+    type: "bouquets", // todo по умолчанию ни один filterType не выбран ищем все товары
     minPrice: "", // минимальная цена в фильтрах
     maxPrice: "", // Максимальная цена в фильтрах
     category: "", // категория букетов
@@ -37,6 +37,7 @@ export const Filter = ({ setTitleGoods }) => {
     // поменялся ли тип type radio button
     if (prevFiltes.type !== filters.type || statusGoods === "idle") {
       dispatch(fetchGoods(validFilters)); // вызов сразу
+      setTitleGoods(filterTypes.find((item) => item.value === filters.type).title);
     } else {
       debouncedFetchGoods(validFilters); // вызов с задержкой
     }
@@ -81,7 +82,6 @@ export const Filter = ({ setTitleGoods }) => {
     const newFilters = { ...filters, type: value, minPrice: "", maxPrice: "" };
     setFilters(() => newFilters);
     setOpenChoice(() => -1); // закрываем остальные Choices
-    setTitleGoods(filterTypes.find((item) => item.value === value).title);
 
     // todo dispatch(changeTitle());
   };
@@ -94,7 +94,6 @@ export const Filter = ({ setTitleGoods }) => {
     };
     setFilters(() => newFilters);
   };
-
 
   // категории букетов в Filter Choices
   const [prodTypeArray] = useState([
