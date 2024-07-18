@@ -4,11 +4,12 @@ export const FilterRadio = () => {
   const [currentType, setCurrentType] = useState("postcards");
 
   // filter radio menu buttons
+  // типы товаров в FilterRadio
   const filterTypes = [
     {
-      id: "flower",
       name: "type",
       value: "bouquets",
+      id: "flower",
       text: "Цветы",
     },
     {
@@ -24,7 +25,6 @@ export const FilterRadio = () => {
       text: "Открытки",
     },
   ];
-
   
   const onChangeHandler = (e) => {
     setCurrentType(() => e.target.value);
