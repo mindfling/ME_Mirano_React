@@ -12,21 +12,24 @@ export const Filter = () => {
   const statusGoods = useSelector((state) => state.goods.status); // todo а надо ли это ?
 
   const [filters, setFilters] = useState({
-    type: "bouquets",
-    minPrice: "",
-    maxPrice: "",
-    category: "",
+    type: 'none', // по умолчанию ни один filterType не выбран ищем все товары
+    minPrice: "", // минимальная цена в фильтрах
+    maxPrice: "", // Максимальная цена в фильтрах
+    category: "", // категория букетов
   });
 
   const prevFiltesRef = useRef(filters);
 
+  const DEBOUNCE_TIMING = 350; // my Default 350 ms
+
   const debouncedFetchGoods = useRef(
     debounce((filters) => {
       dispatch(fetchGoods(filters));
-    }, 350)
+    }, DEBOUNCE_TIMING)
   ).current;
-  // todo задержка времени вызова
+  // debounce задержка времени вызова
   // useRef для сохранения после перезагрузки
+
 
   useEffect(() => {
     const prevFiltes = prevFiltesRef.current;
@@ -63,7 +66,7 @@ export const Filter = () => {
     const { name, value } = target;
     const newFilters = {
       ...filters,
-      [name]: !isNaN(parseInt(value, 10)) ? value : "",
+      [name]: !isNaN(parseInt(value, 10)) ? value : "", //? что здесь происходит ??
     };
     setFilters(() => newFilters);
   };
@@ -106,7 +109,6 @@ export const Filter = () => {
         <div className="container">
           <form className="filter__form">
             <fieldset className="filter__group filter__group_radio">
-
               {filterTypes.map((item, index) => (
                 <FilterRadio
                   key={item.value}
@@ -114,6 +116,7 @@ export const Filter = () => {
                   data={item}
                   type={filters.type}
                   index={index}
+                  isChecked={item.value === filters.type}
                 />
               ))}
             </fieldset>

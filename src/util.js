@@ -1,7 +1,11 @@
 export const getValidFilters = (filters) => {
   const validFilters = {};
   for (const key in filters) {
-    if (Object.hasOwnProperty.call(filters, key) && filters[key]) {
+    if (
+      Object.hasOwnProperty.call(filters, key) &&
+      filters[key] &&
+      filters[key] !== "none"
+    ) {
       validFilters[key] = filters[key];
     }
   }
@@ -9,11 +13,10 @@ export const getValidFilters = (filters) => {
   return validFilters;
 };
 
-
 export const debounce = (fn, msec) => {
   let lastCall = 0;
   let lastCallTimer = 0;
-  
+
   return (...arg) => {
     const prevCall = lastCall;
     lastCall = Date.now();
@@ -28,12 +31,11 @@ export const debounce = (fn, msec) => {
   };
 };
 
-
 export const formatNumber = (num) => {
-  const formatter = new Intl.NumberFormat('ru', {
-    style: 'currency',
-    currency: 'RUB',
+  const formatter = new Intl.NumberFormat("ru", {
+    style: "currency",
+    currency: "RUB",
     maximumFractionDigits: 0,
   });
-  return formatter.format(num);  
-}
+  return formatter.format(num);
+};
