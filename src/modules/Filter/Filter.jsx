@@ -42,28 +42,39 @@ export const Filter = () => {
   }, [dispatch, debouncedFetchGoods, filters]); // todo исправить здесь statusGoods !!!
 
 
-  // const handleMyTypeChange = (e) => {
-  //   setFilters((filters) => ({ ...filters, type: e.target.value }) );
-  // };
+  const handleChoicesToggle = (index) => {
+    setOpenChoice(openChoice === index ? null : index);
+  };
 
-  // const handleTypeChange = ({ target }) => {
-  //   const { value } = target;
-  //   const newFilters = { ...filters, type: value };
-  //   setFilters(() => newFilters);
-  // };
+  const choicesType = {
+    price: 0,
+    type: 1,
+    none: null, //? -1
+  };
+
+  const handleTypeChange = ({ target }) => {
+    const { value } = target;
+    const newFilters = { ...filters, type: value, minPrice: '', maxPrice: '' };
+    setFilters(() => newFilters);
+    setOpenChoice(() => -1); // закрываем остальные Choices
+  };
 
   const handlePriceChange = ({ target }) => {
     const { name, value } = target;
     const newFilters = { ...filters, [name]: value ? parseInt(value) : "" };
     setFilters(() => newFilters);
   };
+  
+  // const handleMyTypeChange = (e) => {
+  //   setFilters((filters) => ({ ...filters, type: e.target.value }) );
+  // };
 
-  const handleChange = ({ target }) => {
-    const { name, value } = target;
-    const newFilters = { ...filters, [name]: value, minPrice: '', maxPrice: '' }; // обновляем значения фильтров
-    setFilters(() => newFilters);
-    setOpenChoice(() => -1); // закрываем остальные Choices
-  };
+  // const handleChange = ({ target }) => {
+  //   const { name, value } = target;
+  //   const newFilters = { ...filters, [name]: value}; // обновляем значения фильтров
+  //   setFilters(() => newFilters);
+  //   setOpenChoice(() => -1); // закрываем остальные Choices
+  // };
 
   // типы товаров в FilterRadio
   const filterTypes = [
@@ -96,15 +107,6 @@ export const Filter = () => {
     "Букеты из сухоцветов",
   ]);
 
-  const choicesType = {
-    price: 0,
-    type: 1,
-    none: null,
-  };
-
-  const handleChoicesToggle = (index) => {
-    setOpenChoice(openChoice === index ? null : index);
-  };
 
   return (
     <>
@@ -124,7 +126,7 @@ export const Filter = () => {
                     value={item.value}
                     id={item.id}
                     checked={item.value === filters.type}
-                    onChange={handleChange}
+                    onChange={handleTypeChange}
                   />
                   <label
                     className={"filter__label filter__label_" + item.id}
@@ -142,7 +144,7 @@ export const Filter = () => {
                 buttonLabel="Цены"
                 className="choices filter__choices_price"
                 isOpen={openChoice === choicesType.price}
-                onToggle={() => handleChoicesToggle(0)} // будет срабатывать внутри Choices по клику на эту кнопку
+                onToggle={() => handleChoicesToggle(choicesType.price)} // будет срабатывать внутри Choices по клику на эту кнопку
               >
                 <fieldset className="filter__price">
                   <input
@@ -169,7 +171,7 @@ export const Filter = () => {
                 buttonLabel="Тип товара"
                 className="choices filter__choices_type"
                 isOpen={openChoice === choicesType.type}
-                onToggle={() => handleChoicesToggle(1)} // будет срабатывать внутри Choices по клику на эту кнопку
+                onToggle={() => handleChoicesToggle(choicesType.type)} // будет срабатывать внутри Choices по клику на эту кнопку
               >
                 <ul className="filter__type-list">
                   {prodTypeArray.map((item, index) => (
