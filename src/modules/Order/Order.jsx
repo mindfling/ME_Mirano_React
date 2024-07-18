@@ -14,8 +14,6 @@ export const Order = () => {
   
   // селектор получает состояние из Redux store
   const { isOpen } = useSelector((state) => state.order);
-  
-  if (!isOpen) return null;
 
 
   const handlerClose = (e) => {
@@ -28,13 +26,16 @@ export const Order = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Order submit form');
     setIsOrdered(() => true);
   }
 
 
-  const orderTotalPrice = 2100;
-  const orderHashNumber = "971f365a-caa1-4cdb-9446-bad2eff047e1";
+  const [orderTotalPrice] = useState(2100);
+  const [orderHashNumber] = useState("971f365a-caa1-4cdb-9446-bad2eff047e1");
+  
+
+  // выход если закрыто 
+  if (!isOpen) return null;
 
   return (
     <>

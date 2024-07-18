@@ -48,7 +48,7 @@ export const Filter = ({ setTitleGoods }) => {
   const choicesType = {
     price: 0,
     type: 1,
-    none: null, //? -1
+    none: -1, //? -1 null
   };
 
   // типы товаров в FilterRadio
@@ -76,20 +76,12 @@ export const Filter = ({ setTitleGoods }) => {
   
   const handleTypeChange = ({ target }) => {
     const { value } = target;
-    // const newFilters = { ...filters, type: value, minPrice: "", maxPrice: "" };
-    // setFilters(() => newFilters);
-    setOpenChoice(() => -1); // закрываем остальные Choices
+    setOpenChoice(() => choicesType.none); // закрываем остальные Choices
     dispatch(changeType(value));
-
   };
 
   const handlePriceChange = ({ target }) => {
     const { name, value } = target;
-    // const newFilters = {
-    //   ...filters,
-    //   [name]: !isNaN(parseInt(value, 10)) ? value : "",
-    // };
-    // setFilters(() => newFilters);
     dispatch(changePrice({ name, value }));
   };
 
