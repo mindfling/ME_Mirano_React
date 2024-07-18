@@ -5,20 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGoods } from "../../redux/goodsSlice";
 import { debounce, getValidFilters } from "../../util";
 import { FilterRadio } from "./FilterRadio";
+import { changePrice, changeType } from "../../redux/filterSlice";
+
 
 export const Filter = ({ setTitleGoods }) => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
   const statusGoods = useSelector((state) => state.goods.status); // todo а надо ли это ?
-
-  const [filters, setFilters] = useState({
-    type: "bouquets", // todo по умолчанию ни один filterType не выбран ищем все товары
-    minPrice: "", // минимальная цена в фильтрах
-    maxPrice: "", // Максимальная цена в фильтрах
-    category: "", // категория букетов
-  });
-
-  const prevFiltesRef = useRef(filters);
+  const filters = useSelector((state) => state.filters)
+  
+  const prevFiltersRef = useRef({});
 
   const DEBOUNCE_TIMING = 350; // my Default 350 ms
 
@@ -31,18 +27,18 @@ export const Filter = ({ setTitleGoods }) => {
   // useRef для сохранения после перезагрузки
 
   useEffect(() => {
-    const prevFiltes = prevFiltesRef.current;
+    const prevFilters = prevFiltersRef.current;
     const validFilters = getValidFilters(filters); // валидируем строку запросов фильтров
 
     // поменялся ли тип type radio button
-    if (prevFiltes.type !== filters.type || statusGoods === "idle") {
+    if (prevFilters.type !== filters.type || statusGoods === "idle") {
       dispatch(fetchGoods(validFilters)); // вызов сразу
       setTitleGoods(filterTypes.find((item) => item.value === filters.type).title);
     } else {
       debouncedFetchGoods(validFilters); // вызов с задержкой
     }
 
-    prevFiltesRef.current = filters; // обновляем предыдущее состояние фильтров
+    prevFiltersRef.current = filters; // обновляем предыдущее состояние фильтров
   }, [dispatch, debouncedFetchGoods, filters]); // todo исправить здесь statusGoods !!!
 
   const handleChoicesToggle = (index) => {
@@ -76,23 +72,25 @@ export const Filter = ({ setTitleGoods }) => {
       title: "Открытки",
     },
   ];
-
+  
+  
   const handleTypeChange = ({ target }) => {
     const { value } = target;
-    const newFilters = { ...filters, type: value, minPrice: "", maxPrice: "" };
-    setFilters(() => newFilters);
+    // const newFilters = { ...filters, type: value, minPrice: "", maxPrice: "" };
+    // setFilters(() => newFilters);
     setOpenChoice(() => -1); // закрываем остальные Choices
+    dispatch(changeType(value));
 
-    // todo dispatch(changeTitle());
   };
 
   const handlePriceChange = ({ target }) => {
     const { name, value } = target;
-    const newFilters = {
-      ...filters,
-      [name]: !isNaN(parseInt(value, 10)) ? value : "", //? что здесь происходит ??
-    };
-    setFilters(() => newFilters);
+    // const newFilters = {
+    //   ...filters,
+    //   [name]: !isNaN(parseInt(value, 10)) ? value : "",
+    // };
+    // setFilters(() => newFilters);
+    dispatch(changePrice({ name, value }));
   };
 
   // категории букетов в Filter Choices
