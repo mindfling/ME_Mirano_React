@@ -1,9 +1,13 @@
 // filter radio menu buttons
 // типы товаров в FilterRadio
 
+import { useDispatch } from "react-redux";
+import { changeTitle } from "../../redux/filterSlice";
+
 export const FilterRadio = ({
   handleTypeChange, data, type, isChecked
 }) => {
+  const dispatch = useDispatch();
   
   return (
     <>
@@ -14,7 +18,10 @@ export const FilterRadio = ({
         value={data.value}
         id={data.id}
         checked={isChecked}
-        onChange={handleTypeChange}
+        onChange={(e) => {
+          handleTypeChange(e);
+          dispatch(changeTitle({...data}))
+        }}
       />
       <label
         className={`filter__label filter__label_${data.id}`}

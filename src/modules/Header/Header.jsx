@@ -8,7 +8,7 @@ export const Header = () => {
   const dispatch = useDispatch(); // диспетчер передает действие
   // const cartItems = useSelector(state => state.cart.cart.items);
   // const itemLength = cartItems.length;
-  const cartItemsLength = useSelector((state) => state.cart.items.length);
+  const { length: cartItemsLength } = useSelector((state) => state.cart.items);
 
 
   const handlerCartToggle = () => {

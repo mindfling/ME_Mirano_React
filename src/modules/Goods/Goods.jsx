@@ -2,29 +2,19 @@ import "./goods.scss";
 import { Card } from "../Card/Card";
 import { Cart } from "../Cart/Cart";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+// import { useState } from "react";
 // import { useEffect, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { fetchGoods } from "../../redux/goodsSlice";
 
 export const Goods = () => {
-  // const dispatch = useDispatch();
   const {
     items: goods,
     status: goodsStatus,
     error,
   } = useSelector((state) => state.goods);
 
-  const defaultTitle = "Цветы";
-  const [label] = useState(defaultTitle);
-
-  // // товары загружаются все в Filters
-  // const defaultType = "bouquets";
-  // useEffect(() => {
-  //   if (goodsStatus === "idle") {
-  //     dispatch(fetchGoods({ type: defaultType }));
-  //   }
-  // }, [dispatch, goodsStatus]);
+  const { siteTitle } = useSelector((state) => state.filter);
 
 
   let content = null;
@@ -72,7 +62,7 @@ export const Goods = () => {
       <section className="goods">
         <div className="container goods__container">
           <div className="goods__box">
-            <h2 className="goods__title">{label}</h2>
+            <h2 className="goods__title">{siteTitle}</h2>
             {!goods.length ? <>{content}</> : <>{content}</>}
           </div>
 

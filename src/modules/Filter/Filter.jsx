@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGoods } from "../../redux/goodsSlice";
 import { debounce, getValidFilters } from "../../util";
 import { FilterRadio } from "./FilterRadio";
+import { changeTitle } from "../../redux/filterSlice";
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -60,6 +61,8 @@ export const Filter = () => {
     const newFilters = { ...filters, type: value, minPrice: "", maxPrice: "" };
     setFilters(() => newFilters);
     setOpenChoice(() => -1); // закрываем остальные Choices
+
+    // todo dispatch(changeTitle());
   };
 
   const handlePriceChange = ({ target }) => {
@@ -105,7 +108,7 @@ export const Filter = () => {
   return (
     <>
       <section className="filter">
-        <h2 className="visually-hidden"></h2>
+        <h2 className="visually-hidden">Фильтры для выбора товара</h2>
         <div className="container">
           <form className="filter__form">
             <fieldset className="filter__group filter__group_radio">
