@@ -1,4 +1,6 @@
-import "./hero.scss";
+import classNames from "classnames";
+import s from './Hero.module.scss';
+// import "./hero.scss";
 
 export const Hero = () => {
 
@@ -7,15 +9,15 @@ export const Hero = () => {
 
   return (
     <>
-      <section className="hero">
-        <div className="container">
-          <div className="hero__head-group">
-            <h1 className="hero__title">{title}</h1>
-            <p className="hero__subtitle">{subtitle}</p>
+      <section className={s.hero}>
+        <div className={classNames("container", s.container)}>
+          <div className={s.head_group}>
+            <h1 className={s.title}>{title}</h1>
+            <p className={s.subtitle}>{subtitle}</p>
           </div>
 
-          <figure className="hero__group-image">
-            <picture className="hero__image hero__image_left">
+          <figure className={s.group_image}>
+            <picture className={classNames(s.image, s.image_left)}>
               <source
                 srcSet="/img/hero-left@1x.avif 1x, /img/hero-left@2x.avif 2x"
                 type="image/avif"
@@ -32,7 +34,7 @@ export const Hero = () => {
             </picture>
 
             <svg
-              className="hero__image hero__image_center"
+              className={classNames(s.image, s.image_center)}
               role="img"
               aria-label="Букет цветов в вазе, включающий нежные розовые розы, розовые хризантемы и другие цветы пастельных цветов, размещенные в белой вазе в форме головы."
               width="680"
@@ -47,11 +49,11 @@ export const Hero = () => {
               </clipPath>
 
               <foreignObject clipPath="url(#hero)" width="100%" height="100%">
-                <div className="hero__image-center"></div>
+                <div className={s["image-center"]}></div>
               </foreignObject>
             </svg>
 
-            <picture className="hero__image hero__image_right">
+            <picture className={classNames(s.image, s.image_right)}>
               <source
                 srcSet="/img/hero-right@1x.avif 1x, /img/hero-right@2x.avif 2x"
                 type="image/avif"
