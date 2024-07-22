@@ -60,7 +60,9 @@
     display: flex;
     align-items: center;
 
-    @include mobile {
+    // @include mobile {
+    // @media (max-width: 528px) {
+    @media (width < $mobileRadioFilters) {
       padding: 10px 12px 10px 40px;
       background-position: center left 12px;
       background-size: 24px;

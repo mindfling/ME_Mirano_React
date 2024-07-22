@@ -7,13 +7,12 @@ import { debounce, getValidFilters } from "../../util";
 import { FilterRadio } from "./FilterRadio";
 import { changePrice, changeType } from "../../redux/filterSlice";
 
-
 export const Filter = ({ setTitleGoods }) => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
   const statusGoods = useSelector((state) => state.goods.status); // todo а надо ли это ?
-  const filters = useSelector((state) => state.filters)
-  
+  const filters = useSelector((state) => state.filters);
+
   const prevFiltersRef = useRef({});
 
   const DEBOUNCE_TIMING = 350; // my Default 350 ms
@@ -33,13 +32,22 @@ export const Filter = ({ setTitleGoods }) => {
     // поменялся ли тип type radio button
     if (prevFilters.type !== filters.type || statusGoods === "idle") {
       dispatch(fetchGoods(validFilters)); // вызов сразу
-      setTitleGoods(filterTypes.find((item) => item.value === filters.type).title);
+      setTitleGoods(
+        filterTypes.find((item) => item.value === filters.type).title
+      );
     } else {
       debouncedFetchGoods(validFilters); // вызов с задержкой
     }
 
     prevFiltersRef.current = filters; // обновляем предыдущее состояние фильтров
-  }, [dispatch, debouncedFetchGoods, filters]); // todo исправить здесь statusGoods !!!
+  }, [
+    dispatch,
+    debouncedFetchGoods,
+    setTitleGoods,
+    statusGoods,
+    filters,
+    // filterTypes,
+  ]); // todo исправить здесь statusGoods !!!
 
   const handleChoicesToggle = (index) => {
     setOpenChoice(openChoice === index ? null : index);
@@ -72,8 +80,7 @@ export const Filter = ({ setTitleGoods }) => {
       title: "Открытки",
     },
   ];
-  
-  
+
   const handleTypeChange = ({ target }) => {
     const { value } = target;
     setOpenChoice(() => choicesType.none); // закрываем остальные Choices

@@ -1,6 +1,7 @@
 $laptop: 1024px;
 $tablet: 768px;
 $mobile: 520px;
+$mobileRadioFilters: 566px;
 
 @mixin laptop {
   @media (max-width: $laptop) {
