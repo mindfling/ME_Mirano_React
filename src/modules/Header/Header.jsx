@@ -4,7 +4,9 @@ import classNames from "classnames";
 import { toggleCart } from "../../redux/cartSlice";
 
 
-export const Header = () => {
+export const Header = ({scrollToFilter}) => {
+  // todo scrollToFilter
+  console.log('scrollToFilter: ', scrollToFilter);
   const dispatch = useDispatch(); // диспетчер передает действие
   // const cartItems = useSelector(state => state.cart.cart.items);
   // const itemLength = cartItems.length;
@@ -12,7 +14,8 @@ export const Header = () => {
 
 
   const handlerCartToggle = () => {
-    dispatch(toggleCart()); // закрываем Корзину
+    // todo closeCart закрываем Корзину
+    dispatch(toggleCart());
   };
 
 
@@ -20,13 +23,31 @@ export const Header = () => {
 
   const getHint = () => {
     const hintList = [
+      "Цветы любимой",
       "Букет из роз",
       "Букет из алых роз",
       "Букет красивых роз",
       "Самый красивый букет роз",
       "Тюльпаны на заказ",
       "Букет хризантем",
-      "1000000 алых роз",
+      "Миллион алых роз",
+      "Букет пион",
+      "Самые красивые пионы",
+      "Кустовые розы",
+      "Букет из кустовых роз",
+      "Белые розы",
+      "Тюльпаны красные",
+      "Роза Эквадор",
+      "Герберы букет",
+      "Белые лилии",
+      "Гортензии",
+      "Розы",
+      "Фрезии",
+      "Хризантемы",
+      "Гиацинты",
+      "Тюльпаны",
+      "Монобукеты ромашки",
+      "Монобукеты розы",
     ];
     return hintList[getRandom(hintList.length - 1)];
   };
