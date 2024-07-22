@@ -1,23 +1,23 @@
-import classNames from "classnames";
-import s from './Hero.module.scss';
+import cn from "classnames";
+import hero from "./Hero.module.scss";
 // import "./hero.scss";
 
 export const Hero = () => {
-
+  // заголоки сайта
   const title = "Авторские букеты";
   const subtitle = "и подарки";
 
   return (
     <>
-      <section className={s.hero}>
-        <div className={classNames("container", s.container)}>
-          <div className={s.head_group}>
-            <h1 className={s.title}>{title}</h1>
-            <p className={s.subtitle}>{subtitle}</p>
+      <section className={hero.hero}>
+        <div className={cn("container", hero.container)}>
+          <div className={hero.head_group}>
+            <h1 className={hero.title}>{title}</h1>
+            <p className={hero.subtitle}>{subtitle}</p>
           </div>
 
-          <figure className={s.group_image}>
-            <picture className={classNames(s.image, s.image_left)}>
+          <figure className={hero.group_image}>
+            <picture className={cn(hero.image, hero.image_left)}>
               <source
                 srcSet="/img/hero-left@1x.avif 1x, /img/hero-left@2x.avif 2x"
                 type="image/avif"
@@ -34,7 +34,7 @@ export const Hero = () => {
             </picture>
 
             <svg
-              className={classNames(s.image, s.image_center)}
+              className={cn(hero.image, hero.image_center)}
               role="img"
               aria-label="Букет цветов в вазе, включающий нежные розовые розы, розовые хризантемы и другие цветы пастельных цветов, размещенные в белой вазе в форме головы."
               width="680"
@@ -49,11 +49,11 @@ export const Hero = () => {
               </clipPath>
 
               <foreignObject clipPath="url(#hero)" width="100%" height="100%">
-                <div className={s["image-center"]}></div>
+                <div className={hero["image-center"]}></div>
               </foreignObject>
             </svg>
 
-            <picture className={classNames(s.image, s.image_right)}>
+            <picture className={cn(hero.image, hero.image_right)}>
               <source
                 srcSet="/img/hero-right@1x.avif 1x, /img/hero-right@2x.avif 2x"
                 type="image/avif"
