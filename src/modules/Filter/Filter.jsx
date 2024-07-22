@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Choices } from "../Choices/Choices";
-import "./filter.scss";
+import filter from './Filter.module.scss';
+// import "./filter.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGoods } from "../../redux/goodsSlice";
 import { debounce, getValidFilters } from "../../util";
 import { FilterRadio } from "./FilterRadio";
 import { changePrice, changeType } from "../../redux/filterSlice";
+import classNames from "classnames";
 
 export const Filter = ({ setTitleGoods }) => {
   const dispatch = useDispatch();
@@ -103,11 +105,11 @@ export const Filter = ({ setTitleGoods }) => {
 
   return (
     <>
-      <section className="filter">
+      <section className={filter.filter}>
         <h2 className="visually-hidden">Фильтры для выбора товара</h2>
         <div className="container">
-          <form className="filter__form">
-            <fieldset className="filter__group filter__group_radio">
+          <form className={filter.form}>
+            <fieldset className={classNames(filter.group, filter.group_radio)}>
               {filterTypes.map((item, index) => (
                 <FilterRadio
                   key={item.value}
@@ -120,16 +122,16 @@ export const Filter = ({ setTitleGoods }) => {
               ))}
             </fieldset>
 
-            <fieldset className="filter__group filter__group_choices">
+            <fieldset className={classNames(filter.group, filter.group_choices)}>
               <Choices
                 buttonLabel="Цены"
-                className="choices filter__choices_price"
+                className={classNames('choices', filter.choices_price)}
                 isOpen={openChoice === choicesType.price}
                 onToggle={() => handleChoicesToggle(choicesType.price)} // будет срабатывать внутри Choices по клику на эту кнопку
               >
-                <fieldset className="filter__price">
+                <fieldset className={filter.price}>
                   <input
-                    className="filter__input-price"
+                    className={filter['input-price']}
                     type="text"
                     name="minPrice"
                     placeholder="от"
@@ -137,7 +139,7 @@ export const Filter = ({ setTitleGoods }) => {
                     onChange={handlePriceChange}
                   />
                   <input
-                    className="filter__input-price"
+                    className={filter['input-price']}
                     type="text"
                     name="maxPrice"
                     placeholder="до"
@@ -148,18 +150,16 @@ export const Filter = ({ setTitleGoods }) => {
               </Choices>
 
               <Choices
+                className={classNames('choices', filter.choices_type)}
                 buttonLabel="Тип товара"
-                className="choices filter__choices_type"
                 isOpen={openChoice === choicesType.type}
                 onToggle={() => handleChoicesToggle(choicesType.type)} // будет срабатывать внутри Choices по клику на эту кнопку
               >
-                <ul className="filter__type-list">
+                <ul className={filter["type-list"]}>
                   {prodTypeArray.map((item, index) => (
-                    <li className="filter__type-item" key={index}>
+                    <li className={filter["type-item"]} key={index}>
                       <button
-                        className={`filter__type-button ${
-                          index === 0 ? "filter__type-button_active" : ""
-                        }`}
+                        className={classNames(filter["type-button"], `${index === 0 ? filter["type-button_active"] : ""}`)}
                         type="button"
                       >
                         {item}

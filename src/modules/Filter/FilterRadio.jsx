@@ -1,14 +1,18 @@
+import classNames from 'classnames';
+import filter from './Filter.module.scss';
 // filter radio menu buttons
 // типы товаров в FilterRadio
 
 export const FilterRadio = ({
-  handleTypeChange, data, type, isChecked
+  handleTypeChange,
+  data,
+  isChecked,
 }) => {
   
   return (
-    <>
+    <div>
       <input
-        className="filter__radio"
+        className={filter.radio}
         type="radio"
         name="type"
         value={data.value}
@@ -19,11 +23,11 @@ export const FilterRadio = ({
         }}
       />
       <label
-        className={`filter__label filter__label_${data.id}`}
+        className={classNames(filter.label, filter[`label_${data.id}`])}
         htmlFor={data.id}
       >
         {data.title}
       </label>
-    </>
+    </div>
   )
 };
