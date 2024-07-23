@@ -69,17 +69,27 @@
     width: calc(284 / 1300 * 100%);
     aspect-ratio: 284 / 352;
     overflow: hidden;
+    transition: all 600ms ease;
 
+    &:hover {
+      filter: saturate(1.8);
+      scale: 105%;
+    }
+    
     &_left {
       border-radius: 400px 400px 400px 0;
+      &:hover {
+        filter: saturate(1.2);
+        scale: 1.1;
+      }
     }
-
+    
     &_center {
       width: calc(680 / 1300 * 100%);
       aspect-ratio: 680 / 588;
     }
 
-    &-center {
+    &Center {
       width: 100%;
       height: 100%;
       background: url("/img/hero@1x.jpg") no-repeat center/cover;
@@ -90,12 +100,16 @@
         url("/img/hero@2x.webp") type("image/webp") 2x,
         url("/img/hero@1x.jpg") type("image/jpg") 1x,
         url("/img/hero@2x.jpg") type("image/jpg") 2x
-      );
-    }
-
-    &_right {
-      border-radius: 400px 0 400px 400px;
-    }
+        );
+      }
+      
+      &_right {
+        border-radius: 400px 0 400px 400px;
+        &:hover {
+          filter: saturate(1.2);
+          scale: 1.1;
+        }
+      }
   }
 
 .container {

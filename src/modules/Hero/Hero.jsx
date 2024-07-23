@@ -49,7 +49,7 @@ export const Hero = () => {
               </clipPath>
 
               <foreignObject clipPath="url(#hero)" width="100%" height="100%">
-                <div className={hero["image-center"]}></div>
+                <div className={hero.imageCenter}></div>
               </foreignObject>
             </svg>
 
