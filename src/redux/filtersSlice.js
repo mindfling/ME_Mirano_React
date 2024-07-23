@@ -6,7 +6,6 @@ const initialState = {
   maxPrice: "", // Максимальная цена в фильтрах
   category: "", // категория букетов
   title: "",
-  // siteTitle: 'Товары',
 };
 
 const filtersSlice = createSlice({
@@ -15,12 +14,15 @@ const filtersSlice = createSlice({
   reducers: {
     changeType(state, action) {
       // меняем тип товаров через FilterRadio очищаем остальные фильтры
-      state.type = action.payload;
+      // state.type = action.payload;
+      state.type = action.payload.value;
+      console.log('changeType action.payload: ', action.payload);
       state.minPrice = "";
       state.maxPrice = "";
       state.category = "";
     },
     changePrice(state, action) {
+      console.log('changePrice action.payload: ', action.payload);
       state[action.payload.name] = action.payload.value;
     },
   },
