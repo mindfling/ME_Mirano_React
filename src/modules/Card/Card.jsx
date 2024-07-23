@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-import "./card.scss";
+import card from './Card.module.scss';
+// import "./card.scss";
 import classNames from "classnames";
 import { addItemToCart } from "../../redux/cartSlice";
 import { API_URL} from "../../const";
@@ -38,20 +39,20 @@ export const Card = ({
 
   return (
     <article
-      className={classNames(className, "card")}
+      className={classNames(className, card.card)}
       title={`Товар ${title}, артикул 00${id}`}
     >
       <img
-        className="card__image"
+        className={card.image}
         src={`${API_URL}${img}`}
         alt={`Товар ${title}, артикул ${id}`}
       />
-      <div className="card__content">
-        <h3 className="card__title">{title}</h3>
-        <div className="card__footer">
-          <p className="card__date-delivery">{dateDelivery}</p>
+      <div className={card.content}>
+        <h3 className={card.title}>{title}</h3>
+        <div className={card.footer}>
+          <p className={card.date_delivery}>{dateDelivery}</p>
           <button
-            className="card__button"
+            className={card.button}
             onClick={handlerAddToCart}
             onMouseEnter={() => handlerMouseEnter()}
             onMouseLeave={() => handlerMouseLeave()}
