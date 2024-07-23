@@ -130,6 +130,16 @@
     &:focus-visible {
       outline: 2px solid $orange;
     }
+
+    &_min-price {
+      display: block;
+      // border: 1px solid orange;
+    }
+
+    &_max-price {
+      display: block;
+      // border: 1px solid lawngreen;
+    }
   }
 
   .type-list {
@@ -153,7 +163,6 @@
     &:focus-visible {
       outline: 2px solid $orange;
     }
-
 
     &_active {
       color: $orange;

@@ -1,21 +1,27 @@
-import classNames from "classnames";
-import "./choices.scss";
-// import s from "./Choices.module.scss";
+import cn from "classnames";
+// import "./choices.scss";
+import choices from "./Choices.module.scss";
 
 // Choices in Filter
-export const Choices = ({ children, buttonLabel, className, isOpen, onToggle }) => {
+export const Choices = ({
+  children,
+  buttonLabel,
+  className,
+  isOpen,
+  onToggle,
+}) => {
   return (
     <>
-      <div className={classNames(className)}>
+      <div className={cn(className, choices.choices)}>
         <button
-          className={`choices__btn choices__btn_${isOpen ? "open" : "close"}`}
+          className={cn(choices.btn, choices[`btn_${isOpen ? "open" : "close"}`])}
           type="button"
           onClick={onToggle}
         >
           {buttonLabel}
         </button>
 
-        {isOpen && <div className="choices__box">{children}</div>}
+        {isOpen && <div className={choices.box}>{children}</div>}
       </div>
     </>
   );

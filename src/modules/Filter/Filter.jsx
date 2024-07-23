@@ -6,68 +6,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGoods } from "../../redux/goodsSlice";
 import { debounce, getValidFilters } from "../../util";
 import { FilterRadio } from "./FilterRadio";
-import { changePrice, changeType } from "../../redux/filterSlice";
+import { changePrice, changeType } from "../../redux/filtersSlice";
 import classNames from "classnames";
 
 export const Filter = ({ setTitleGoods }) => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
+
   const statusGoods = useSelector((state) => state.goods.status); // todo а надо ли это ?
   const filters = useSelector((state) => state.filters);
 
-  const prevFiltersRef = useRef({});
 
-  const DEBOUNCE_TIMING = 350; // my Default 350 ms
-
-  const debouncedFetchGoods = useRef(
-    debounce((filters) => {
-      dispatch(fetchGoods(filters));
-    }, DEBOUNCE_TIMING)
-  ).current;
-  // debounce задержка времени вызова
-  // useRef для сохранения после перезагрузки
-
-  useEffect(() => {
-    const prevFilters = prevFiltersRef.current;
-    const validFilters = getValidFilters(filters); // валидируем строку запросов фильтров
-
-    // поменялся ли тип type radio button
-    if (prevFilters.type !== filters.type || statusGoods === "idle") {
-      dispatch(fetchGoods(validFilters)); // вызов сразу
-      setTitleGoods(
-        filterTypes.find((item) => item.value === filters.type).title
-      );
-    } else {
-      debouncedFetchGoods(validFilters); // вызов с задержкой
-    }
-
-    prevFiltersRef.current = filters; // обновляем предыдущее состояние фильтров
-  }, [
-    dispatch,
-    debouncedFetchGoods,
-    setTitleGoods,
-    statusGoods,
-    filters,
-    // filterTypes,
-  ]); // todo исправить здесь statusGoods !!!
-
-  const handleChoicesToggle = (index) => {
-    setOpenChoice(openChoice === index ? null : index);
-  };
-
-  const choicesType = {
-    price: 0,
-    type: 1,
-    none: -1, //? -1 null
-  };
-
-  // типы товаров в FilterRadio
+    
+  // типы товаров в FilterRadioTypes
   const filterTypes = [
     {
       name: "type",
       value: "bouquets",
       id: "flower",
       title: "Цветы",
+      isCategories: true,
     },
     {
       name: "type",
@@ -83,10 +41,60 @@ export const Filter = ({ setTitleGoods }) => {
     },
   ];
 
+
+  // const prevFiltersRef = useRef(filters);
+  const prevFiltersRef = useRef({});
+  // console.log('prevFiltersRef: ', prevFiltersRef.current, prevFiltersRef.current.type);
+
+  const debouncedFetchGoods = useRef(
+    debounce((filters) => {
+      dispatch(fetchGoods(filters));
+    }, 350)
+  ).current;
+
+  useEffect(() => {
+    const prevFilters = prevFiltersRef.current; // состояние из useRef
+    const validFilters = getValidFilters(filters); // валидируем строку запросов фильтров
+
+    // поменялся ли тип type radio button
+    if (prevFilters.type !== filters.type || statusGoods === "idle") {
+      dispatch(fetchGoods(validFilters)); // вызов сразу
+      setTitleGoods(
+        filterTypes.find((item) => item.value === filters.type).title
+      );
+    }
+    //  else {
+      // debouncedFetchGoods(validFilters); // вызов с задержкой
+    // }
+
+    prevFiltersRef.current = filters; // обновляем предыдущее состояние фильтров
+  }, [
+    dispatch,
+    debouncedFetchGoods,
+    setTitleGoods,
+    statusGoods,
+    filters,
+    filterTypes,
+  ]); // todo исправить здесь statusGoods !!!
+
+  const handleChoicesToggle = (index) => {
+    setOpenChoice(openChoice === index ? null : index);
+  };
+
+  const choicesType = {
+    price: 0,
+    type: 1,
+    none: -1, //? -1 null
+  };
+
+
+
+
   const handleTypeChange = ({ target }) => {
     const { value } = target;
     setOpenChoice(() => choicesType.none); // закрываем остальные Choices
-    dispatch(changeType(value));
+    // dispatch(changeType(value));
+    dispatch(changeType({value}));
   };
 
   const handlePriceChange = ({ target }) => {
@@ -102,6 +110,8 @@ export const Filter = ({ setTitleGoods }) => {
     "Цветы в корзине",
     "Букеты из сухоцветов",
   ]);
+
+
 
   return (
     <>
@@ -124,14 +134,14 @@ export const Filter = ({ setTitleGoods }) => {
 
             <fieldset className={classNames(filter.group, filter.group_choices)}>
               <Choices
-                buttonLabel="Цены"
                 className={classNames('choices', filter.choices_price)}
+                buttonLabel="Цены"
                 isOpen={openChoice === choicesType.price}
                 onToggle={() => handleChoicesToggle(choicesType.price)} // будет срабатывать внутри Choices по клику на эту кнопку
               >
                 <fieldset className={filter.price}>
                   <input
-                    className={filter['input-price']}
+                    className={classNames(filter['input-price'], filter['input-price_min-price'])}
                     type="text"
                     name="minPrice"
                     placeholder="от"
@@ -139,7 +149,7 @@ export const Filter = ({ setTitleGoods }) => {
                     onChange={handlePriceChange}
                   />
                   <input
-                    className={filter['input-price']}
+                    className={classNames(filter['input-price'], filter['input-price_max-price'])}
                     type="text"
                     name="maxPrice"
                     placeholder="до"
@@ -149,7 +159,7 @@ export const Filter = ({ setTitleGoods }) => {
                 </fieldset>
               </Choices>
 
-              <Choices
+              { (prevFiltersRef.current.type === filterTypes[0].value) && <Choices
                 className={classNames('choices', filter.choices_type)}
                 buttonLabel="Тип товара"
                 isOpen={openChoice === choicesType.type}
@@ -167,7 +177,7 @@ export const Filter = ({ setTitleGoods }) => {
                     </li>
                   ))}
                 </ul>
-              </Choices>
+              </Choices>}
             </fieldset>
           </form>
         </div>
