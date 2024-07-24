@@ -1,16 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cart from "./cartSlice";
-import order from "./orderSlice";
-import goods from "./goodsSlice";
-import filters from "./filtersSlice";
+import cartReducer from "./cartSlice";
+import orderReducer from "./orderSlice";
+import goodsReducer from "./goodsSlice";
+import filtersReducer from "./filtersSlice";
 
-// так тоже можно ;)
+
 const store = configureStore({
   reducer: {
-    cart,
-    order,
-    goods,
-    filters,
+    cart: cartReducer,
+    order: orderReducer,
+    goods: goodsReducer,
+    filters: filtersReducer,
   },
 });
 
